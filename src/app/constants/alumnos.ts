@@ -1,0 +1,68 @@
+export const alumnos = [
+    {
+        id: 1,
+        fotoUrl: "/assets/alumno.jfif",
+        nombre: 'Ricardo Martinez Gomez',
+        maestroTitular: 'Paola Durante',
+        grado: '3ero de Primaria',
+        salon: '3A',
+        alergias: 'N/A',
+        padre: 'Alejandro Martinez',
+        contactoPadreCel: '81-22-94-19-00',
+        contactoPadreEmail: 'ricardomtz@gmail.com',
+        madre: 'Rocio Gomez Sepulveda',
+        contactoMadreCel: '81-22-94-19-01',
+        contactoMadreEmail: 'rociogmz@gmail.com',
+        hermanos: [{
+            id: 2,
+            nombre: 'Alejandra Martinez',
+            maestroTitular: 'Jorge Gutierrez',
+            grado: '2ndo de Primaria',
+            salon: '2B',
+            alergias: 'N/A',
+            padre: 'Alejandro Martinez',
+            contactoPadreCel: '81-22-94-19-00',
+            contactoPadreEmail: 'ricardomtz@gmail.com',
+            madre: 'Rocio Gomez Sepulveda',
+            contactoMadreCel: '81-22-94-19-01',
+            contactoMadreEmail: 'rociogmz@gmail.com',
+            hermanos: 'Alejandra Martinez Gomez',
+            personasAutorizadas: ['Perla Gomez', 'Rogelio Martinez']
+        }],
+        personasAutorizadas: ['Perla Gomez', 'Rogelio Martinez']
+    },
+    {
+        id: 2,
+        fotoUrl: "/assets/female.jfif",
+        nombre: 'Alejandra Martinez Gomez',
+        maestroTitular: 'Jorge Gutierrez',
+        grado: '2ndo de Primaria',
+        salon: '2B',
+        alergias: 'N/A',
+        padre: 'Alejandro Martinez',
+        contactoPadreCel: '81-22-94-19-00',
+        contactoPadreEmail: 'ricardomtz@gmail.com',
+        madre: 'Rocio Gomez Sepulveda',
+        contactoMadreCel: '81-22-94-19-01',
+        contactoMadreEmail: 'rociogmz@gmail.com',
+        hermanos: [
+            {
+                id: 1,
+                nombre: 'Ricardo Martinez Gomez',
+                maestroTitular: 'Paola Durante',
+                grado: '3ero de Primaria',
+                salon: '3A',
+                alergias: 'N/A',
+                padre: 'Ricardo Martinez Gomez',
+                contactoPadreCel: '81-22-94-19-00',
+                contactoPadreEmail: 'ricardomtz@gmail.com',
+                madre: 'Rocio Gomez Sepulveda',
+                hermanos: 'Alejandra Martinez Gomez',
+                contactoMadreCel: '81-22-94-19-01',
+                contactoMadreEmail: 'rociogmz@gmail.com',
+                personasAutorizadas: ['Perla Gomez', 'Rogelio Martinez']
+            }
+        ],
+        personasAutorizadas: ['Perla Gomez', 'Rogelio Martinez']
+    },
+];

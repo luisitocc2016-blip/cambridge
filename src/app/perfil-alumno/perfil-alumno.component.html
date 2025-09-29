@@ -1,0 +1,44 @@
+<div class="body">
+    <div style="text-align: center; margin-bottom: 2.5rem;">
+        <h1>{{alumno.nombre}}</h1>
+    </div>
+    <div style="display: flex;">
+        <div>
+            <div>
+                <img [src]="alumno.fotoUrl" alt="" height="150rem" width="150rem" style="border-radius:5%;">
+            </div>
+            <div style="text-align: center;">
+                <button style="width: 100%;" mat-raised-button color="primary">Borrar Foto</button>
+            </div>
+        </div>
+
+        <div style="margin-left: 5rem;display: flex;">
+            <div style="display: flex; flex-direction: column; margin-right: 12rem;">
+                <p>Maestro Titular: {{alumno.maestroTitular}}</p>
+                <p>Grado Escolar: {{alumno.grado}}</p>
+                <p>Grupo: {{alumno.salon}}</p>
+                <p>Alergias: {{alumno.alergias}}</p>
+                <p>Padre: {{alumno.padre}}</p>
+                <p>Contacto Padre:
+                    <li>{{alumno.contactoPadreCel}}</li>
+                    <li>{{alumno.contactoPadreEmail}}</li>
+                </p>
+            </div>
+            <div>
+                <p>Madre: {{alumno.madre}}</p>
+                <p>Contacto Madre:
+                    <li>{{alumno.contactoMadreCel}}</li>
+                    <li>{{alumno.contactoMadreEmail}}</li>
+                </p>
+                <p>Hermanos en Colegio:
+                    <li *ngFor="let familiar of alumno.hermanos" style="color: blue;cursor: pointer;"
+                        (click)="cargarHermanos(familiar)">{{familiar.nombre}}</li>
+                </p>
+                <p>Personas Autorizadas para recoger:
+                <ul>
+                    <li *ngFor="let persona of alumno.personasAutorizadas">{{persona}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

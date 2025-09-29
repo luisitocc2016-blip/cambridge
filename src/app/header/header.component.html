@@ -1,0 +1,24 @@
+<div style="display: flex;">
+    <div>
+        <img style="width: 50%;" src="/assets/logo.png" alt="">
+    </div>
+    <div style="width: 100%;">
+        <p>
+            <mat-toolbar color="primary">
+                <mat-toolbar-row style="background-color: midnightblue;">
+                    <span>{{titulo}}</span>
+                    <span class="example-spacer"></span>
+                    <button mat-button [matMenuTriggerFor]="menu">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </p>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="padres()">Padres</button>
+            <button mat-menu-item (click)="perfilAlumno()">Perfil Alumno</button>
+            <button mat-menu-item (click)="teachersClassRoom()">Salones</button>
+            <button mat-menu-item (click)="administracion()">Administracion</button>
+        </mat-menu>
+    </div>
+</div>
