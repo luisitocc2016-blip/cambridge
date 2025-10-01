@@ -1,0 +1,67 @@
+<h1 mat-dialog-title style="text-align: center;">{{nombreAlumno}}</h1>
+<div mat-dialog-content>
+  <div style="text-align: center;">
+    <div>
+      <img id="foto" [src]="selectedFile" alt="" height="170rem" width="200rem" style="border-radius:10%;">
+    </div>
+     <div style="margin-top: 1rem;">
+     <input hidden type="file" #fileInput (change)="onFileSelected($event)" accept="image/*">
+      <button mat-raised-button color="primary" (click)="fileInput.click()">Subir Foto</button>
+     </div>
+     
+  </div>
+  <form [formGroup]="familia" style="display: flex; flex-direction: column; margin-top: 2.5rem;
+">
+    <div>
+      <p>Datos Generales</p>
+    </div>
+    <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="nombre">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Grado</mat-label>
+    <input matInput formControlName="grado">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Grupo</mat-label>
+    <input matInput formControlName="grupo">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Maestro(a) Titular</mat-label>
+    <input matInput formControlName="maestro">
+  </mat-form-field>
+    <mat-form-field>
+    <mat-label>Alergias</mat-label>
+    <input matInput formControlName="alergias">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Padre</mat-label>
+    <input matInput formControlName="padre">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Tel: Padre</mat-label>
+    <input matInput formControlName="telPadre">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Correo Padre</mat-label>
+    <input matInput formControlName="correoPadre">
+  </mat-form-field>
+    <mat-form-field>
+    <mat-label>Madre</mat-label>
+    <input matInput formControlName="madre">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Tel: Madre</mat-label>
+    <input matInput formControlName="telMadre">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Correo Madre</mat-label>
+    <input matInput formControlName="correoMadre">
+  </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: flex-end;gap: 1rem;">
+  <button mat-raised-button color="secondary" (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="familia.value" cdkFocusInitial>Guardar</button>
+</div>

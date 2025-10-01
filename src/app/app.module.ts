@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChildComponent } from './child/child.component';
@@ -27,6 +26,10 @@ import { FormsModule } from '@angular/forms';
 import { ViewPadresComponent } from './view-padres/view-padres.component';
 import {MatCardModule} from '@angular/material/card';
 import { UniquePipe } from './unique.pipe';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SharedServiceService } from './shared/shared-service.service';
+
 
 @NgModule({
   declarations: [
@@ -43,6 +46,8 @@ import { UniquePipe } from './unique.pipe';
     UniquePipe
   ],
   imports: [
+    MatDialogModule,
+    MatTabsModule,
     MatCardModule,
     MatInputModule,
     MatFormFieldModule,
@@ -63,12 +68,12 @@ import { UniquePipe } from './unique.pipe';
       {path: 'padres', component: ViewPadresComponent},
       {path: 'administracion', component: DashBoardComponent},
       {path: 'teacher', component: ViewMaestraComponent},
-      {path: 'perfil-alumno', component: ViewAlumnoComponent},
+      {path: 'perfil-alumno/:id', component: ViewAlumnoComponent},
       {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     ]),
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [SharedServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

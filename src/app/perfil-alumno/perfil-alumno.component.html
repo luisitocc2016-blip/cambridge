@@ -1,4 +1,7 @@
 <div class="body">
+    <div>
+        <button mat-button color="primary" (click)="goBack()">Regresar</button>
+    </div>
     <div style="text-align: center; margin-bottom: 2.5rem;">
         <h1>{{alumno.nombre}}</h1>
     </div>
@@ -32,11 +35,11 @@
                 </p>
                 <p>Hermanos en Colegio:
                     <li *ngFor="let familiar of alumno.hermanos" style="color: blue;cursor: pointer;"
-                        (click)="cargarHermanos(familiar)">{{familiar.nombre}}</li>
+                        (click)="editarHermano(familiar)">{{familiar.nombre}}</li>
                 </p>
                 <p>Personas Autorizadas para recoger:
                 <ul>
-                    <li *ngFor="let persona of alumno.personasAutorizadas">{{persona}}</li>
+                    <li *ngFor="let persona of alumno.personasAutorizadas">{{persona.nombre}}</li>
                 </ul>
             </div>
         </div>

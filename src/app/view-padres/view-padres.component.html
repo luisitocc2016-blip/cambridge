@@ -1,74 +1,89 @@
 <div>
     <div>
-
         <body>
             <app-header class="page-header"></app-header>
             <main>
-                <div class="body">
-                    <div>
-                        <h3>Familia</h3>
-                    </div>
-                    <div style="display: flex;justify-content: space-evenly;">
-                        <div *ngFor="let alumno of alumnos; let i = index">
-                            <mat-card class="example-card">
-                                <mat-card-header>
-                                    <div mat-card-avatar class="example-header-image" [attr.data-index]="i"></div>
-                                    <mat-card-title style="font-size: medium;">{{alumno.nombre}}</mat-card-title>
-                                </mat-card-header>
-                                <mat-card-content>
-                                </mat-card-content>
-                                <mat-card-actions>
-                                    <button mat-button>QR</button>
-                                    <button mat-button>Editar</button>
-                                </mat-card-actions>
-                            </mat-card>
-                        </div>
-                    </div>
-
-                    <div style="border-style: dashed;padding: 2rem;margin-top: 1rem;width: 100%;">
-                        <div>
-                            <h1>Qr's Generados:</h1>
-                        </div>
-                        <hr>
-                        <div>
-                            <div *ngFor="let alumno of alumnos; let i = index" style="margin-bottom: 1rem;">
-                                <div style="display: flex;justify-content: space-between;">
-                                    <div>
-                                        <strong>Nombre:</strong> {{alumno.nombre}}
+                <div>
+                    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" (selectedTabChange)="selectedTabChange($event)">
+                        <mat-tab label="Familia">
+                             <div style="text-align: center;margin-top: 1rem;">
+                                        <button mat-raised-button color="primary" (click)="agregarAlumno()">Agregar
+                                            Alumno</button>
                                     </div>
-                                    <div>
-                                        <strong style="margin-right: 4rem;">Código QR:</strong>
-                                        <button mat-raised-button color="primary" (click)="agregarPersona()">
-                                            QR</button>
+                            <div class="body">
+                                <div style="display: flex;justify-content: space-evenly;margin-top: 1.5rem;margin-bottom: 2rem;">
+                                    <div *ngFor="let alumno of alumnos; let i = index">
+                                        <mat-card class="example-card">
+                                            <mat-card-header style="display: flex; flex-direction: column;">
+                                                <div style="text-align: center;">
+                                                    <img [src]="alumno.fotoUrl" alt="" height="100rem" width="150rem" style="border-radius:10%;">
+                                                </div>
+                                                <mat-card-title
+                                                    style="font-size: medium;">{{alumno.nombre}}</mat-card-title>
+                                            </mat-card-header>
+                                            <mat-card-content>
+                                            </mat-card-content>
+                                            <mat-card-actions>
+                                                <button mat-button>QR</button>
+                                                <button mat-button (click)="editarAlumno(alumno)">Editar</button>
+                                                <button mat-button style="color: red;" (click)="borrarAlumno(alumno)">Borrar</button>
+                                            </mat-card-actions>
+                                        </mat-card>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div style="border-style: dashed;padding: 2rem;margin-top: 1rem;width: 100%;">
-                         <div>
-                            <h1>Personas Autorizadas:</h1>
-                        </div>
-                        <hr>
-                       <div>
-                            <div *ngFor="let alumno of alumnos; let i = index">
-                                <div *ngFor="let persona of alumno.personasAutorizadas | unique" style="margin-bottom: 1rem;">
-                                    <div style="display: flex;justify-content: space-between;">
-                                        <div>
-                                            <strong>Nombre:</strong> {{persona}}
+                        </mat-tab>
+                        <mat-tab label="Car-Pool">
+                            <div class="body">
+                                <div style="display: flex;justify-content: space-evenly;margin-top: 2.5rem;">
+                                   <!--  <div *ngFor="let alumno of alumnos; let i = index">
+                                        <mat-card class="example-card">
+                                            <mat-card-header>
+                                                <div mat-card-avatar class="example-header-image" [attr.data-index]="i">
+                                                </div>
+                                                <mat-card-title
+                                                    style="font-size: medium;">{{alumno.nombre}}</mat-card-title>
+                                            </mat-card-header>
+                                            <mat-card-content>
+                                            </mat-card-content>
+                                            <mat-card-actions>
+                                                <button mat-button>QR</button>
+                                                <button mat-button (click)="editarAlumno(alumno,i)">Editar</button>
+                                            </mat-card-actions>
+                                        </mat-card>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Personas Autorizadas">
+                            <div class="body">
+                                <div *ngIf="alumnos.length > 0" style="border-style: groove;padding: 2rem;margin-top: 1rem;width: 100%;margin-top: 2.5rem;">
+                                    <div *ngFor="let alumno of alumnos; let i = index">
+                                        <div *ngFor="let persona of alumno.personasAutorizadas; let j = index"
+                                            style="margin-bottom: 1rem;">
+                                            <div style="display: flex;justify-content: space-between;">
+                                                <div>
+                                                    <strong>Nombre:</strong> {{persona.nombre}}
+                                                </div>
+                                                <div style="display: flex;gap: 1rem;">
+                                                    <button mat-raised-button color="primary"
+                                                        (click)="viewQr()">QR</button>
+                                                    <button mat-raised-button color="secondary"
+                                                        (click)="editarPersona(persona)">Editar</button>
+                                                         <button mat-raised-button style="color: red;"
+                                                        (click)="borrarPersona(persona)">Borrar</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <strong style="margin-right: 4rem;">Código QR:</strong>
-                                            <button mat-raised-button color="primary" (click)="viewQr()">QR</button>
-                                        </div>
+                                    </div>
+                                    <div  style="text-align: center;">
+                                        <button mat-raised-button color="primary" (click)="agregarPersona()">Agregar
+                                            Persona</button>
                                     </div>
                                 </div>
                             </div>
-                            <div style="text-align: center;">
-                                <button mat-raised-button color="primary" (click)="agregarPersona()">Agregar Persona</button>
-                            </div>
-                        </div>
-                    </div>
+                        </mat-tab>
+                    </mat-tab-group>
                 </div>
             </main>
             <hr>

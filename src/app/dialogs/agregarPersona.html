@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Nueva Persona Autorizada</h1>
+<div mat-dialog-content>
+  <div style="text-align: center;">
+    <div>
+      <img id="foto" [src]="selectedFile" alt="" height="170rem" width="200rem" style="border-radius:10%;">
+    </div>
+     <div style="margin-top: 1rem;">
+     <input hidden type="file" #fileInput (change)="onFileSelected($event)" accept="image/*">
+      <button mat-raised-button color="primary" (click)="fileInput.click()">Subir Foto</button>
+     </div>
+     
+  </div>
+  <form [formGroup]="profileForm" style="display: flex; flex-direction: column; margin-top: 2.5rem;
+">
+    <div>
+      <p>Datos Generales</p>
+    </div>
+    <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="nombre">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Parentesco</mat-label>
+    <input matInput formControlName="parentesco">
+  </mat-form-field>
+   <div>
+      <p>Datos Vehiculo</p>
+    </div>
+    <mat-form-field>
+    <mat-label>Marca del Vehiculo</mat-label>
+    <input matInput formControlName="marca">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Placas</mat-label>
+    <input matInput formControlName="placas">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Modelo</mat-label>
+    <input matInput formControlName="modelo">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Color</mat-label>
+    <input matInput formControlName="color">
+  </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: flex-end;gap: 1rem;">
+  <button mat-raised-button color="secondary" (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="profileForm.value" cdkFocusInitial>Guardar</button>
+</div>
