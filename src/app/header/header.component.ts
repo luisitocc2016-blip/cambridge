@@ -14,14 +14,14 @@ export class HeaderComponent {
 
     constructor(private router: Router, public service: SharedServiceService) {
       if (this.router.url.includes('/teacher')) {
-        this.titulo = 'Class Rooms';
+        this.titulo = 'Class Room';
       } else if (this.router.url.includes('/perfil-alumno')) {
         this.titulo = 'Perfil Alumno';
       } else if (this.router.url.includes('/administracion')) {
-        this.titulo = 'Administracion de Alumnos';
+        this.titulo = 'Administracion';
       } else if (this.router.url.includes('/padres')) {
         this.users = this.service.getUser();
-        if(this.users){
+        if(this.users && this.users.grupo === 'padres') {
           this.titulo = this.users.nombre;
         } else {
           this.titulo = 'Perfil Padres';

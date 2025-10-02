@@ -10,7 +10,7 @@
      </div>
      
   </div>
-  <form [formGroup]="profileForm" style="display: flex; flex-direction: column; margin-top: 2.5rem;
+  <form [formGroup]="newUserForm" style="display: flex; flex-direction: column; margin-top: 2.5rem;
 ">
     <div>
       <p>Datos Generales</p>
@@ -18,6 +18,22 @@
     <mat-form-field>
     <mat-label>Nombre</mat-label>
     <input matInput formControlName="nombre">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="passWord">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
+   <mat-form-field>
+    <mat-label>Grupo</mat-label>
+    <input matInput formControlName="grupo">
+    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Telefono</mat-label>
+    <input matInput formControlName="telefono">
   </mat-form-field>
    <mat-form-field>
     <mat-label>Parentesco</mat-label>
@@ -46,5 +62,5 @@
 </div>
 <div mat-dialog-actions style="display: flex; justify-content: flex-end;gap: 1rem;">
   <button mat-raised-button color="secondary" (click)="onNoClick()">Cancelar</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="profileForm.value" cdkFocusInitial>Guardar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="newUserForm.value" cdkFocusInitial>Guardar</button>
 </div>

@@ -35,8 +35,14 @@ export class LoginComponent {
   
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.service.setUser(result);
-          this.router.navigate(['/padres']);
+          if(result.grupo === 'padres'){
+            this.service.setUser(result);
+            this.router.navigate(['/padres']);
+          } else if(result.grupo === 'admin'){
+             this.router.navigate(['/dashboard']);
+          } else if(result.grupo === 'teacher'){
+             this.router.navigate(['/teacher']);
+          }
         }
       });
     }
@@ -50,8 +56,12 @@ export class LoginComponent {
 })
 export class NewUserDialog {
   selectedFile: any = null;
-  profileForm = new FormGroup({
+  newUserForm = new FormGroup({
     nombre: new FormControl(''),
+    passWord: new FormControl(''),
+    grupo: new FormControl(''),
+    email: new FormControl(''),
+    telefono: new FormControl(''),
     parentesco: new FormControl(''),
     marca: new FormControl(''),
     placas: new FormControl(''),
@@ -66,7 +76,7 @@ export class NewUserDialog {
     this.selectedFile = '../../assets/avatar.png';
     if (data) {
       this.selectedFile = data.fotoUrl || this.selectedFile;
-      this.profileForm.patchValue(data);
+      this.newUserForm.patchValue(data);
     }
     console.log(data);
 
@@ -74,7 +84,7 @@ export class NewUserDialog {
 
   onFileSelected(event: any): void {
     this.selectedFile = window.URL.createObjectURL(event.target.files[0]);
-    this.profileForm.patchValue({ fotoUrl: this.selectedFile });
+    this.newUserForm.patchValue({ fotoUrl: this.selectedFile });
   }
 
   onNoClick(): void {

@@ -5,8 +5,10 @@
             <app-header class="page-header"></app-header>
             <main>
                 <div class="login-container">
-                    <h3 style="font-size: 2rem;">Log In</h3>
-                    <form [formGroup]="loginForm" style="display: flex; flex-direction: column; margin-top: 2.5rem; width: 80%;">
+                    <div style="text-align: center; padding: 1rem;">
+                        <h3 style="font-size: 2rem;">Log In</h3>
+                    </div>
+                    <form [formGroup]="loginForm" style="display: flex; flex-direction: column; width: 80%;">
                     <mat-form-field>
                         <mat-label>Usuario</mat-label>
                         <input matInput formControlName="email">
@@ -15,7 +17,7 @@
                         <mat-label>Password</mat-label>
                         <input matInput formControlName="password" type="password">
                     </mat-form-field>
-                    <div style="display: flex; justify-content: space-between;">
+                    <div style="display: flex; justify-content: space-between;padding: 1rem;">
                         <button mat-button color="accent" (click)="newUser()">Registrarse</button>
                         <button mat-raised-button color="primary" (click)="login()" [disabled]="loginForm.invalid">Login</button>
                     </div>

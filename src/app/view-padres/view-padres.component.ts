@@ -180,6 +180,7 @@ export class FamiliaDialog {
   imports: [MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule],
 })
 export class PersonaAutorizadaDialog {
+  nombrePersona: string = this.data?.nombre || 'Nuevo Persona Autorizada';
   selectedFile: any = null;
   profileForm = new FormGroup({
     nombre: new FormControl(''),
