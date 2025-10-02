@@ -29,6 +29,7 @@ import { UniquePipe } from './unique.pipe';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatDialogModule} from '@angular/material/dialog';
 import { SharedServiceService } from './shared/shared-service.service';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { SharedServiceService } from './shared/shared-service.service';
     ViewMaestraComponent,
     ViewAlumnoComponent,
     ViewPadresComponent,
-    UniquePipe
+    LoginComponent
   ],
   imports: [
     MatDialogModule,
@@ -65,11 +66,14 @@ import { SharedServiceService } from './shared/shared-service.service';
     AppRoutingModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
+      {path: 'login', component: LoginComponent},
+      {path: 'dashBoard', component: DashBoardComponent},
       {path: 'padres', component: ViewPadresComponent},
       {path: 'administracion', component: DashBoardComponent},
       {path: 'teacher', component: ViewMaestraComponent},
       {path: 'perfil-alumno/:id', component: ViewAlumnoComponent},
-      {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+      {path: '', redirectTo: '/login', pathMatch: 'full'},
+      { path: '**', redirectTo: '/login' }
     ]),
     BrowserAnimationsModule,
   ],

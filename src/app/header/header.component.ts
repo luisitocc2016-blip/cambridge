@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedServiceService } from '../shared/shared-service.service';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +9,10 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
     titulo!: string;
+    hideMenu: boolean = false;
+    users: any;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, public service: SharedServiceService) {
       if (this.router.url.includes('/teacher')) {
         this.titulo = 'Class Rooms';
       } else if (this.router.url.includes('/perfil-alumno')) {
@@ -17,7 +20,15 @@ export class HeaderComponent {
       } else if (this.router.url.includes('/administracion')) {
         this.titulo = 'Administracion de Alumnos';
       } else if (this.router.url.includes('/padres')) {
-        this.titulo = 'Perfil Padres';
+        this.users = this.service.getUser();
+        if(this.users){
+          this.titulo = this.users.nombre;
+        } else {
+          this.titulo = 'Perfil Padres';
+        }
+      } else if (this.router.url.includes('/login')) {
+        this.hideMenu = true;
+        this.titulo = 'Login';
       }
     }
 

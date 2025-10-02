@@ -1,0 +1,30 @@
+<div>
+    <div>
+
+        <body>
+            <app-header class="page-header"></app-header>
+            <main>
+                <div class="login-container">
+                    <h3 style="font-size: 2rem;">Log In</h3>
+                    <form [formGroup]="loginForm" style="display: flex; flex-direction: column; margin-top: 2.5rem; width: 80%;">
+                    <mat-form-field>
+                        <mat-label>Usuario</mat-label>
+                        <input matInput formControlName="email">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" type="password">
+                    </mat-form-field>
+                    <div style="display: flex; justify-content: space-between;">
+                        <button mat-button color="accent" (click)="newUser()">Registrarse</button>
+                        <button mat-raised-button color="primary" (click)="login()" [disabled]="loginForm.invalid">Login</button>
+                    </div>
+                </form>
+                </div>
+            </main>
+            <hr>
+            <app-footer class="page-footer"></app-footer>
+        </body>
+    </div>
+</div>
+

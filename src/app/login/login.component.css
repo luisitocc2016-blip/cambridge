@@ -1,0 +1,39 @@
+ body {
+     display: flex;
+     flex-direction: column;
+     min-height: 100vh;
+     /* or 100dvh for modern browsers */
+ }
+
+ main {
+     flex-grow: 1;
+     /* Allows the main content to expand and push the footer down */
+ }
+
+ .page-header {
+    height: 4rem;
+    margin-bottom: 1rem;
+ }
+ .page-header,
+ .page-footer {
+     background-color: mediumblue;
+     color: white;
+     padding: 1%;
+ }
+
+ .body{
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+.login-container {
+    background-color: lightgrey;
+    margin-right: 25rem;
+    margin-left: 25rem;
+    border-style: groove;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}

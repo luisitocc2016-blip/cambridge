@@ -6,11 +6,16 @@
         <p>
             <mat-toolbar color="primary">
                 <mat-toolbar-row style="background-color: midnightblue;">
+                    <div *ngIf="users" style="display: flex; margin-right: 4%;">
+                        <img style="border-radius: 30%;" [src]="users.fotoUrl" alt="" height="40rem" width="50rem">
+                    </div>
                     <span>{{titulo}}</span>
                     <span class="example-spacer"></span>
-                    <button mat-button [matMenuTriggerFor]="menu">
+                    <div *ngIf="!hideMenu">
+                        <button mat-button [matMenuTriggerFor]="menu">
                         <mat-icon>menu</mat-icon>
                     </button>
+                    </div>
                 </mat-toolbar-row>
             </mat-toolbar>
         </p>
