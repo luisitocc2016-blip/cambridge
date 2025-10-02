@@ -32,6 +32,11 @@ export class HeaderComponent {
       }
     }
 
+    home(): void {
+      this.titulo = '';
+      this.router.navigate(['/home']);
+    }
+
     teachersClassRoom(): void {
       this.titulo = 'Teacher Rooms';
       this.router.navigate(['/teacher']);
