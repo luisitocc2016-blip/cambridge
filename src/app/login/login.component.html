@@ -9,19 +9,20 @@
                         <h3 style="font-size: 2rem;">Log In</h3>
                     </div>
                     <form [formGroup]="loginForm" style="display: flex; flex-direction: column; width: 80%;">
-                    <mat-form-field>
-                        <mat-label>Usuario</mat-label>
-                        <input matInput formControlName="email">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Password</mat-label>
-                        <input matInput formControlName="password" type="password">
-                    </mat-form-field>
-                    <div style="display: flex; justify-content: space-between;padding: 1rem;">
-                        <button mat-button color="accent" (click)="newUser()">Registrarse</button>
-                        <button mat-raised-button color="primary" (click)="login()" [disabled]="loginForm.invalid">Login</button>
-                    </div>
-                </form>
+                        <mat-form-field>
+                            <mat-label>Usuario</mat-label>
+                            <input matInput formControlName="email">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Password</mat-label>
+                            <input matInput formControlName="password" type="password">
+                        </mat-form-field>
+                        <div style="display: flex; justify-content: space-between;padding: 1rem;">
+                            <button mat-button color="accent" (click)="newUser()">Registrarse</button>
+                            <button mat-raised-button color="primary" (click)="login()"
+                                [disabled]="loginForm.invalid">Login</button>
+                        </div>
+                    </form>
                 </div>
             </main>
             <hr>
@@ -29,4 +30,3 @@
         </body>
     </div>
 </div>
-

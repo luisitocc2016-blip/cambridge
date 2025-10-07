@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedServiceService } from '../shared/shared-service.service';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -15,51 +16,72 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-   loginForm = new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl(''),
-    });
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  loginForm = new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl(''),
+  });
 
-  constructor(public dialog: MatDialog, public service:SharedServiceService, public router:Router) { }
+  constructor(private _snackBar: MatSnackBar, public dialog: MatDialog, public service: SharedServiceService, public router: Router) {
+    this.service.clearAlumnos();
+    this.service.clearUser();
+    this.service.clearCarPool();
+    this.service.clearPersonaAutorizada();
+  }
 
   login() {
     // Implement your login logic here
-    console.log('Login attempt with:', this.loginForm.value);
+    this._snackBar.open(`Pendiente de implementar`, 'Cerrar', {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+
     // Call an authentication service to send credentials to the backend
   }
-   newUser() {
-      const dialogRef = this.dialog.open(NewUserDialog, {
-        data: {},
-        width: '40%'
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          if(result.grupo === 'padres'){
-            this.service.setUser(result);
-            this.router.navigate(['/padres']);
-          } else if(result.grupo === 'admin'){
-             this.router.navigate(['/dashboard']);
-          } else if(result.grupo === 'teacher'){
-             this.router.navigate(['/teacher']);
-          }
+  newUser() {
+    const dialogRef = this.dialog.open(NewUserDialog, {
+      data: {},
+      width: '40%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      result.grupo = 'padres';
+      if (result) {
+        if (result.grupo === 'padres') {
+          this.service.setUser(result);
+          this.router.navigate(['/padres']);
+        } else if (result.grupo === 'admin') {
+          this.router.navigate(['/dashboard']);
+        } else if (result.grupo === 'teacher') {
+          this.router.navigate(['/teacher']);
         }
-      });
-    }
+        this._snackBar.open(`${result.nombre} ha sido Agregado`, 'Cerrar', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    });
+  }
 }
 
 @Component({
   selector: 'app-newUser',
   templateUrl: '../dialogs/agregarNuevoUsuario.html',
   standalone: true,
-  imports: [MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule],
 })
 export class NewUserDialog {
+  titulo = '';
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   selectedFile: any = null;
   newUserForm = new FormGroup({
     nombre: new FormControl(''),
     passWord: new FormControl(''),
-    grupo: new FormControl(''),
+    //grupo: new FormControl(''),
     email: new FormControl(''),
     telefono: new FormControl(''),
     parentesco: new FormControl(''),
@@ -70,21 +92,28 @@ export class NewUserDialog {
     fotoUrl: new FormControl(''),
   });
   constructor(
+    private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<NewUserDialog>
   ) {
     this.selectedFile = '../../assets/avatar.png';
-    if (data) {
-      this.selectedFile = data.fotoUrl || this.selectedFile;
-      this.newUserForm.patchValue(data);
+    if (data.action === 'edit') {
+      this.titulo = data.user.nombre;
+      this.selectedFile = data.user.fotoUrl || this.selectedFile;
+      this.newUserForm.patchValue(data.user);
+    } else {
+      this.titulo = 'Nuevo Usuario';
     }
-    console.log(data);
-
   }
 
   onFileSelected(event: any): void {
     this.selectedFile = window.URL.createObjectURL(event.target.files[0]);
     this.newUserForm.patchValue({ fotoUrl: this.selectedFile });
+    this._snackBar.open('Foto cargada de manera correcta', 'Cerrar', {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   onNoClick(): void {

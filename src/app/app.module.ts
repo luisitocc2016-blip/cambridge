@@ -10,26 +10,28 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PerfilAlumnoComponent } from './perfil-alumno/perfil-alumno.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { ViewMaestraComponent } from './view-maestra/view-maestra.component';
 import { ViewAlumnoComponent } from './view-alumno/view-alumno.component';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ViewPadresComponent } from './view-padres/view-padres.component';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { UniquePipe } from './unique.pipe';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
 import { SharedServiceService } from './shared/shared-service.service';
 import { LoginComponent } from './login/login.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 @NgModule({
@@ -47,6 +49,7 @@ import { LoginComponent } from './login/login.component';
     LoginComponent
   ],
   imports: [
+    MatSnackBarModule,
     MatDialogModule,
     MatTabsModule,
     MatCardModule,
@@ -66,14 +69,14 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      {path: 'login', component: LoginComponent},
-      {path: 'dashBoard', component: DashBoardComponent},
-      {path: 'padres', component: ViewPadresComponent},
-      {path: 'administracion', component: DashBoardComponent},
-      {path: 'teacher', component: ViewMaestraComponent},
-      {path: 'perfil-alumno/:id', component: ViewAlumnoComponent},
-      {path: '', redirectTo: '/login', pathMatch: 'full'},
-      { path: '**', redirectTo: '/login' }
+      { path: 'login', component: LoginComponent },
+      { path: 'dashBoard', component: DashBoardComponent },
+      { path: 'padres', component: ViewPadresComponent },
+      { path: 'administracion', component: DashBoardComponent },
+      { path: 'teacher', component: ViewMaestraComponent },
+      { path: 'perfil-alumno/:id', component: ViewAlumnoComponent },
+      { path: '', redirectTo: '/padres', pathMatch: 'full' },
+      { path: '**', redirectTo: '/padres' }
     ]),
     BrowserAnimationsModule,
   ],

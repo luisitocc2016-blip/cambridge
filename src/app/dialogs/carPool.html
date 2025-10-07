@@ -1,0 +1,168 @@
+<h1 mat-dialog-title>{{titulo}}</h1>
+<div mat-dialog-content>
+  <div *ngIf="data.action === 'Nuevo'">
+    <p>Seleccione Familia</p>
+    <div
+      style="
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+      "
+    >
+      <div *ngFor="let alumno of data.data; let i = index">
+        <mat-card class="example-card">
+          <mat-card-header style="display: flex; flex-direction: column">
+            <div style="text-align: center">
+              <img
+                [src]="alumno.fotoUrl"
+                alt=""
+                height="100rem"
+                width="150rem"
+                style="border-radius: 10%"
+              />
+            </div>
+            <mat-card-title style="font-size: medium"
+              >{{alumno.nombre}}</mat-card-title
+            >
+          </mat-card-header>
+          <mat-card-content> </mat-card-content>
+          <mat-card-actions style="display: flex; justify-content: center">
+            <div>
+              <p>Seleccionar</p>
+            </div>
+            <div style="margin-top: -0.5rem">
+              <mat-checkbox
+                (change)="seleccionar($event, alumno)"
+              ></mat-checkbox>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="data.action === 'editar'">
+    <p>Familia Seleccionada</p>
+    <div
+      style="
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+      "
+    >
+      <div *ngFor="let alumno of data.data.alumno; let i = index">
+        <mat-card class="example-card">
+          <mat-card-header style="display: flex; flex-direction: column">
+            <div style="text-align: center">
+              <img
+                [src]="alumno.fotoUrl"
+                alt=""
+                height="100rem"
+                width="150rem"
+                style="border-radius: 10%"
+              />
+            </div>
+            <mat-card-title style="font-size: medium"
+              >{{alumno.nombre}}</mat-card-title
+            >
+          </mat-card-header>
+          <mat-card-content> </mat-card-content>
+          <mat-card-actions style="display: flex; justify-content: center">
+            <div>
+              <p>Seleccionado</p>
+            </div>
+            <div style="margin-top: -0.5rem">
+              <mat-checkbox
+                (change)="seleccionar($event, alumno)"
+                [checked]="alumno.seleccionado"
+              ></mat-checkbox>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p>Informacion General del Car-Pool</p>
+  </div>
+  <div style="text-align: center">
+    <div>
+      <img
+        id="foto"
+        [src]="selectedFile"
+        alt=""
+        height="170rem"
+        width="200rem"
+        style="border-radius: 10%"
+      />
+    </div>
+    <div style="margin-top: 1rem">
+      <input
+        [hidden]="true"
+        type="file"
+        #fileInput
+        (change)="onFileSelected($event)"
+        accept="image/*"
+      />
+      <button mat-raised-button color="primary" (click)="fileInput.click()">
+        Subir Foto
+      </button>
+    </div>
+  </div>
+  <form
+    [formGroup]="profileForm"
+    style="display: flex; flex-direction: column; margin-top: 2.5rem"
+  >
+    <div>
+      <p>Datos Generales</p>
+    </div>
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Tel</mat-label>
+      <input matInput formControlName="telefono" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Correo</mat-label>
+      <input matInput formControlName="correo" />
+    </mat-form-field>
+    <div>
+      <p>Datos Vehiculo</p>
+    </div>
+    <mat-form-field>
+      <mat-label>Marca del Vehiculo</mat-label>
+      <input matInput formControlName="marca" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Placas</mat-label>
+      <input matInput formControlName="placas" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Modelo</mat-label>
+      <input matInput formControlName="modelo" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Color</mat-label>
+      <input matInput formControlName="color" />
+    </mat-form-field>
+  </form>
+</div>
+<div
+  mat-dialog-actions
+  style="display: flex; justify-content: flex-end; gap: 1rem"
+>
+  <button mat-raised-button color="secondary" (click)="onNoClick()">
+    Cancelar
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="profileForm.value"
+    cdkFocusInitial
+  >
+    Guardar
+  </button>
+</div>

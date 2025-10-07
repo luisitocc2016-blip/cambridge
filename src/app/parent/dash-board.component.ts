@@ -40,11 +40,11 @@ const NAMES: string[] = [
   templateUrl: './dash-board.component.html',
   styleUrls: ['./dash-board.component.css']
 })
-export class DashBoardComponent implements AfterViewInit{
-   asistio = false;
-   falta = false;
-   todaysDate = new Date();
-  displayedColumns: string[] = ['id', 'name', 'enviado','asistio', 'falta', 'acciones'];
+export class DashBoardComponent implements AfterViewInit {
+  asistio = false;
+  falta = false;
+  todaysDate = new Date();
+  displayedColumns: string[] = ['id', 'name', 'enviado', 'asistio', 'falta', 'acciones'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -52,24 +52,24 @@ export class DashBoardComponent implements AfterViewInit{
 
   constructor() {
     // Create 100 users
-    const users = Array.from({length: 5}, (_, k) => this.createNewUser(k + 1));
+    const users = Array.from({ length: 5 }, (_, k) => this.createNewUser(k + 1));
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
   }
   ngAfterViewInit() {
-     this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  alumnoEnClase(event:MatCheckboxChange, row:any){
-    if(event.checked){
+  alumnoEnClase(event: MatCheckboxChange, row: any) {
+    if (event.checked) {
       row.asistio = true;
     }
   }
 
-  faltaAlumno(event:MatCheckboxChange, row:any){
-    if(event.checked){
+  faltaAlumno(event: MatCheckboxChange, row: any) {
+    if (event.checked) {
       row.falta = true;
     }
   }
@@ -83,21 +83,21 @@ export class DashBoardComponent implements AfterViewInit{
     }
   }
 
-  
- createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
 
-  return {
-    id: id.toString(),
-    name: name,
-    enviado: true,
-    asistio: true,
-    falta: false,
-  };
-}
+  createNewUser(id: number): UserData {
+    const name =
+      NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
+      ' ' +
+      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
+      '.';
+
+    return {
+      id: id.toString(),
+      name: name,
+      enviado: true,
+      asistio: true,
+      falta: false,
+    };
+  }
 
 }

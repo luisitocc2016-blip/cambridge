@@ -15,7 +15,7 @@ export class PerfilAlumnoComponent implements OnInit {
   alumno: any;
   previousUrl: string = '';
 
-  constructor(public service:SharedServiceService,public activatedRoute: ActivatedRoute, public router: Router, private location: Location) { }
+  constructor(public service: SharedServiceService, public activatedRoute: ActivatedRoute, public router: Router, private location: Location) { }
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params['id'];
@@ -24,7 +24,7 @@ export class PerfilAlumnoComponent implements OnInit {
         (item: { id: number }) => item.id === Number(id)
       )[0];
     }
-     this.router.events
+    this.router.events
       .pipe(
         filter((event) => event instanceof RoutesRecognized),
         map((event) => event as RoutesRecognized),
@@ -34,15 +34,13 @@ export class PerfilAlumnoComponent implements OnInit {
         this.previousUrl = events[0].urlAfterRedirects;
       });
   }
-  
+
 
   goBack(): void {
-    console.log(this.previousUrl);
-    
     if (this.previousUrl !== undefined) {
       this.location.back();
     } else {
-     // this.router.navigate([HOME_URL], { replaceUrl: true });
+      // this.router.navigate([HOME_URL], { replaceUrl: true });
     }
   }
 

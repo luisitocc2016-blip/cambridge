@@ -4,16 +4,48 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SharedServiceService {
-alumnos: any = [];
-users:any = [];
+  alumnos: any = [];
+  users: any = [];
   constructor() { }
+
+
+  setPersonaAutorizada(data: any) {
+    localStorage.setItem('personaAutorizada', JSON.stringify(data));
+  }
+
+  getPersonaAutorizada() {
+    const personaAutorizada = localStorage.getItem('personaAutorizada');
+    return personaAutorizada ? JSON.parse(personaAutorizada) : null;
+  }
+  clearPersonaAutorizada() {
+    localStorage.removeItem('personaAutorizada');
+  }
+
+  setCarPool(data: any) {
+    localStorage.setItem('carPool', JSON.stringify(data));
+  }
+
+  getCarPool() {
+    const carPool = localStorage.getItem('carPool');
+    return carPool ? JSON.parse(carPool) : null;
+  }
+
+  clearCarPool() {
+    localStorage.removeItem('carPool');
+  }
 
   setAlumnos(data: any) {
     this.alumnos.push(data);
+    localStorage.setItem('alumnos', JSON.stringify(data));
   }
 
   getAlumnos() {
-    return this.alumnos;
+    const alumnos = localStorage.getItem('alumnos');
+    return alumnos ? JSON.parse(alumnos) : null;
+  }
+
+  clearAlumnos() {
+    localStorage.removeItem('alumnos');
   }
 
   setUser(data: any) {
