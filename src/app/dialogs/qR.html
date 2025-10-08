@@ -11,4 +11,6 @@
 </div>
 <div mat-dialog-actions style="display: flex; justify-content: space-evenly;gap: 1rem;">
   <a *ngIf="qrCodeDownloadLink" [href]="qrCodeDownloadLink" download="qrcode">Descargar</a>
+  <button  mat-raised-button
+    color="primary" (click)="shareQrCode()">Compartir</button>
 </div>

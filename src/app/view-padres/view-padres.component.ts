@@ -450,6 +450,23 @@ export class qRDialog {
     }
   }
 
+  async shareQrCode() {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'My QR Code',
+        text: 'Scan this QR code!',
+        url: this.qrCode // Or a URL to the generated image
+      });
+      console.log('QR Code shared successfully');
+    } catch (error) {
+      console.error('Error sharing QR Code:', error);
+    }
+  } else {
+    // Fallback for browsers that don't support Web Share API
+    alert('Web Share API is not supported in this browser.');
+  }
+}
   onCloseClick(): void {
     this.dialogRef.close();
   }
