@@ -1,0 +1,14 @@
+
+<h1 mat-dialog-title style="text-align: center;">QR Generado
+    <button mat-icon-button (click)="onCloseClick()" style="float: right;">
+    <mat-icon>close</mat-icon>
+  </button>
+</h1>
+<div mat-dialog-content>
+  <div style="text-align: center;">
+    <qrcode  (qrCodeURL)="onChangeURL($event)" [qrdata]="qrCode" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+  </div>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: space-evenly;gap: 1rem;">
+  <a *ngIf="qrCodeDownloadLink" [href]="qrCodeDownloadLink" download="qrcode">Descargar</a>
+</div>

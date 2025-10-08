@@ -27,9 +27,10 @@
 }
 
 .login-container {
+    max-width: 20%;
     background-color: lightgrey;
-    margin-right: 25rem;
-    margin-left: 25rem;
+    
+    margin-left: 35rem;
     border-style: groove;
     display: flex;
     flex-direction: column;

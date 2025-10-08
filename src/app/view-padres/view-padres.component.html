@@ -23,12 +23,18 @@
                                                         style="border-radius:10%;">
                                                 </div>
                                                 <mat-card-title
-                                                    style="font-size: medium;">{{user.nombre}}</mat-card-title>
+                                                    style="font-size: medium;">{{user.nombre}}
+                                                </mat-card-title>
                                             </mat-card-header>
                                             <mat-card-content>
                                             </mat-card-content>
                                             <mat-card-actions>
-                                                <button mat-button>QR</button>
+                                                <div *ngIf="user.qrCode">
+                                                     <button mat-button (click)="verQr(user)">Ver QR</button>
+                                                </div>
+                                                <div *ngIf="!user.qrCode">
+                                                     <button mat-button (click)="generateQr(user,'user')">generar QR</button>
+                                                </div>
                                                 <button mat-button (click)="editarUser(user)">Editar</button>
                                                 <button mat-button style="color: red;"
                                                     (click)="borrarUser(user)">Borrar</button>
@@ -59,7 +65,12 @@
                                             <mat-card-content>
                                             </mat-card-content>
                                             <mat-card-actions>
-                                                <button mat-button>QR</button>
+                                                 <div *ngIf="alumno.qrCode">
+                                                     <button mat-button (click)="verQr(alumno)">Ver QR</button>
+                                                </div>
+                                                <div *ngIf="!alumno.qrCode">
+                                                     <button mat-button (click)="generateQr(alumno, 'alumno')">generar QR</button>
+                                                </div>
                                                 <button mat-button (click)="editarAlumno(alumno)">Editar</button>
                                                 <button mat-button style="color: red;"
                                                     (click)="borrarAlumno(alumno)">Borrar</button>
@@ -90,7 +101,12 @@
                                             <mat-card-content>
                                             </mat-card-content>
                                             <mat-card-actions>
-                                                <button mat-button>QR</button>
+                                                 <div *ngIf="pool.qrCode">
+                                                     <button mat-button (click)="verQr(pool)">Ver QR</button>
+                                                </div>
+                                                <div *ngIf="!pool.qrCode">
+                                                     <button mat-button (click)="generateQr(pool, 'pool')">generar QR</button>
+                                                </div>
                                                 <button mat-button (click)="editarCarPool(pool,i)">Editar</button>
                                                 <button mat-button style="color: red;"
                                                     (click)="boarrarCarPool(pool)">Borrar</button>
@@ -123,7 +139,12 @@
                                                 <mat-card-content>
                                                 </mat-card-content>
                                                 <mat-card-actions>
-                                                    <button mat-button>QR</button>
+                                                     <div *ngIf="persona.qrCode">
+                                                     <button mat-button (click)="verQr(persona)">Ver QR</button>
+                                                </div>
+                                                <div *ngIf="!persona.qrCode">
+                                                     <button mat-button (click)="generateQr(persona, 'persona')">generar QR</button>
+                                                </div>
                                                     <button mat-button (click)="editarPersona(persona)">Editar</button>
                                                     <button mat-button style="color: red;"
                                                         (click)="borrarPersona(persona)">Borrar</button>

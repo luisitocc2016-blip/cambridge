@@ -31,6 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { SharedServiceService } from './shared/shared-service.service';
 import { LoginComponent } from './login/login.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 
@@ -49,6 +50,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     LoginComponent
   ],
   imports: [
+    QRCodeModule,
     MatSnackBarModule,
     MatDialogModule,
     MatTabsModule,

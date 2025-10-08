@@ -11,6 +11,9 @@ import { CommonModule } from '@angular/common';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { NewUserDialog } from '../login/login.component';
+import { SafeUrl } from '@angular/platform-browser';
+import { QRCodeModule } from 'angularx-qrcode';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -24,6 +27,7 @@ export class ViewPadresComponent implements OnInit {
   alumnos: any = [];
   carpool: any = [];
   users: any = [];
+  qrCode: string = '';
 
   constructor(private _snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, public service: SharedServiceService) { }
 
@@ -40,6 +44,57 @@ export class ViewPadresComponent implements OnInit {
     if (carpool) {
       this.carpool.push(carpool);
     }
+  }
+
+  verQr(user: any) {
+    this.dialog.open(qRDialog, {
+      data: user.qrCode,
+      width: '20%',
+      disableClose: false
+    });
+  }
+
+  generateQr(usuario: any, data: string) {
+    this.qrCode = JSON.stringify(usuario);
+    usuario.qrCode = this.qrCode;
+    if (data === 'persona') {
+      this.alumnos.forEach((alumno: any) => {
+        if (Array.isArray(alumno.personasAutorizadas) && alumno.personasAutorizadas.length > 0) {
+          alumno.personasAutorizadas.forEach((p: any) => {
+            const index = alumno.personasAutorizadas.indexOf(usuario);
+            if (index !== -1) {
+              alumno.personasAutorizadas.splice(index, 1);
+            }
+            this.alumnos.forEach((alumno: any) => {
+              alumno.personasAutorizadas.push(usuario);
+            });
+          });
+        }
+      });
+    }
+    if (data === 'pool') {
+      this.carpool.splice(this.carpool.indexOf(usuario), 1);
+      this.service.setCarPool(usuario);
+      const carPool = this.service.getCarPool();
+      this.carpool.push(carPool);
+    }
+    if (data === 'user') {
+      this.users.splice(this.users.indexOf(usuario), 1);
+      this.service.setUser(usuario);
+      const users = this.service.getUser();
+      this.users.push(users);
+    }
+    if (data === 'alumno') {
+      this.alumnos.splice(this.alumnos.indexOf(usuario), 1);
+      this.service.setAlumnos(usuario);
+      const alumnos = this.service.getAlumnos();
+      this.alumnos.push(alumnos);
+    }
+    this.dialog.open(qRDialog, {
+      data: this.qrCode,
+      width: '20%',
+      disableClose: false
+    });
   }
 
   agregarUser() {
@@ -194,10 +249,6 @@ export class ViewPadresComponent implements OnInit {
     });
   }
 
-  viewQr() {
-    alert("Funcionalidad en desarrollo");
-  }
-
   editarPersona(persona: any) {
     const dialogRef = this.dialog.open(PersonaAutorizadaDialog, {
       data: persona,
@@ -276,6 +327,7 @@ export class ViewPadresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.carpool.splice(this.carpool.indexOf(pool), 1);
         this.service.setCarPool(result);
         const carPool = this.service.getCarPool();
         this.carpool.push(carPool);
@@ -376,6 +428,36 @@ export class CarPoolDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+}
+
+@Component({
+  selector: 'app-dialog-qr',
+  templateUrl: '../dialogs/qR.html',
+  standalone: true,
+  imports: [CommonModule, MatDialogModule, QRCodeModule, MatIconModule, MatButtonModule],
+})
+export class qRDialog {
+  selectedFile: any = null;
+  qrCode: string = '';
+  qrCodeDownloadLink: SafeUrl = "";
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<FamiliaDialog>
+  ) {
+    this.selectedFile = '../../assets/avatar.png';
+    if (data) {
+      this.qrCode = data;
+    }
+  }
+
+  onCloseClick(): void {
+    this.dialogRef.close();
+  }
+
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
+  }
+
 }
 
 @Component({
