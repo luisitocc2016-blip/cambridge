@@ -10,7 +10,7 @@
         margin-bottom: 2rem;
       "
     >
-      <div *ngFor="let alumno of data.data; let i = index">
+      <div *ngFor="let alumno of data.data; let i = index" style="width: auto;margin-right: 10px;">
         <mat-card class="example-card">
           <mat-card-header style="display: flex; flex-direction: column">
             <div style="text-align: center">
@@ -18,7 +18,7 @@
                 [src]="alumno.fotoUrl"
                 alt=""
                 height="100rem"
-                width="150rem"
+                width="110rem"
                 style="border-radius: 10%"
               />
             </div>
@@ -51,7 +51,7 @@
         margin-bottom: 2rem;
       "
     >
-      <div *ngFor="let alumno of data.data.alumno; let i = index">
+      <div *ngFor="let alumno of data.data.alumno; let i = index" style="width: auto;margin-right: 10px;">
         <mat-card class="example-card">
           <mat-card-header style="display: flex; flex-direction: column">
             <div style="text-align: center">
@@ -59,7 +59,7 @@
                 [src]="alumno.fotoUrl"
                 alt=""
                 height="100rem"
-                width="150rem"
+                width="110rem"
                 style="border-radius: 10%"
               />
             </div>

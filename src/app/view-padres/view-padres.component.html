@@ -14,12 +14,12 @@
                             </div>
                             <div class="body">
                                 <div
-                                    style="display: flex;justify-content: space-evenly;margin-top: 1.5rem;margin-bottom: 2rem;">
+                                    style="display: flex;justify-content: space-evenly;margin-top: 3.5rem;margin-bottom: 2rem;">
                                     <div *ngFor="let user of users; let i = index">
                                         <mat-card class="example-card">
                                             <mat-card-header style="display: flex; flex-direction: column;">
                                                 <div style="text-align: center;">
-                                                    <img [src]="user.fotoUrl" alt="" height="100rem" width="150rem"
+                                                    <img [src]="user.fotoUrl" alt="" height="200rem" width="250rem"
                                                         style="border-radius:10%;">
                                                 </div>
                                                 <mat-card-title
@@ -33,7 +33,7 @@
                                                      <button mat-button (click)="verQr(user)">Ver QR</button>
                                                 </div>
                                                 <div *ngIf="!user.qrCode">
-                                                     <button mat-button (click)="generateQr(user,'user')">generar QR</button>
+                                                     <button mat-button (click)="generateQr(user,'user')">Crear QR</button>
                                                 </div>
                                                 <button mat-button (click)="editarUser(user)">Editar</button>
                                                 <button mat-button style="color: red;"
@@ -51,12 +51,12 @@
                             </div>
                             <div class="body">
                                 <div
-                                    style="display: flex;justify-content: space-evenly;margin-top: 1.5rem;margin-bottom: 2rem;">
+                                    style="display: flex;justify-content: space-evenly;margin-top: 3.5rem;margin-bottom: 2rem;">
                                     <div *ngFor="let alumno of alumnos; let i = index">
                                         <mat-card class="example-card">
                                             <mat-card-header style="display: flex; flex-direction: column;">
                                                 <div style="text-align: center;">
-                                                    <img [src]="alumno.fotoUrl" alt="" height="100rem" width="150rem"
+                                                    <img [src]="alumno.fotoUrl" alt="" height="200rem" width="250rem"
                                                         style="border-radius:10%;">
                                                 </div>
                                                 <mat-card-title
@@ -69,7 +69,7 @@
                                                      <button mat-button (click)="verQr(alumno)">Ver QR</button>
                                                 </div>
                                                 <div *ngIf="!alumno.qrCode">
-                                                     <button mat-button (click)="generateQr(alumno, 'alumno')">generar QR</button>
+                                                     <button mat-button (click)="generateQr(alumno, 'alumno')">Crear QR</button>
                                                 </div>
                                                 <button mat-button (click)="editarAlumno(alumno)">Editar</button>
                                                 <button mat-button style="color: red;"
@@ -87,12 +87,12 @@
                             </div>
                             <div class="body">
                                 <div
-                                    style="display: flex;justify-content: space-evenly;margin-top: 1.5rem;margin-bottom: 2rem;">
+                                    style="display: flex;justify-content: space-evenly;margin-top: 3.5rem;margin-bottom: 2rem;">
                                     <div *ngFor="let pool of carpool; let i = index">
                                         <mat-card class="example-card">
                                             <mat-card-header style="display: flex; flex-direction: column;">
                                                 <div style="text-align: center;">
-                                                    <img [src]="pool.fotoUrl" alt="" height="100rem" width="150rem"
+                                                    <img [src]="pool.fotoUrl" alt="" height="200rem" width="250rem"
                                                         style="border-radius:10%;">
                                                 </div>
                                                 <mat-card-title
@@ -105,7 +105,7 @@
                                                      <button mat-button (click)="verQr(pool)">Ver QR</button>
                                                 </div>
                                                 <div *ngIf="!pool.qrCode">
-                                                     <button mat-button (click)="generateQr(pool, 'pool')">generar QR</button>
+                                                     <button mat-button (click)="generateQr(pool, 'pool')">Crear QR</button>
                                                 </div>
                                                 <button mat-button (click)="editarCarPool(pool,i)">Editar</button>
                                                 <button mat-button style="color: red;"
@@ -123,15 +123,15 @@
                             </div>
                             <div class="body">
                                 <div
-                                    style="margin-top: 1.5rem;margin-bottom: 2rem;display: flex; justify-content: space-evenly;">
+                                    style="margin-top: 3.5rem;margin-bottom: 2rem;display: flex; justify-content: space-evenly;">
                                     <div *ngIf="alumnos.length" style="display: flex;justify-content: space-evenly;">
                                         <div *ngFor="let persona of alumnos[0].personasAutorizadas; let j = index"
                                             style="margin-bottom: 1rem;">
                                             <mat-card class="example-card">
                                                 <mat-card-header style="display: flex; flex-direction: column;">
                                                     <div style="text-align: center;">
-                                                        <img [src]="persona.fotoUrl" alt="" height="100rem"
-                                                            width="150rem" style="border-radius:10%;">
+                                                        <img [src]="persona.fotoUrl" alt="" height="200rem"
+                                                            width="250rem" style="border-radius:10%;">
                                                     </div>
                                                     <mat-card-title
                                                         style="font-size: medium;">{{persona.nombre}}</mat-card-title>
@@ -143,7 +143,7 @@
                                                      <button mat-button (click)="verQr(persona)">Ver QR</button>
                                                 </div>
                                                 <div *ngIf="!persona.qrCode">
-                                                     <button mat-button (click)="generateQr(persona, 'persona')">generar QR</button>
+                                                     <button mat-button (click)="generateQr(persona, 'persona')">Crear QR</button>
                                                 </div>
                                                     <button mat-button (click)="editarPersona(persona)">Editar</button>
                                                     <button mat-button style="color: red;"

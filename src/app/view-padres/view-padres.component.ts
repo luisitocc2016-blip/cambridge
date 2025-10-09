@@ -55,9 +55,9 @@ export class ViewPadresComponent implements OnInit {
   }
 
   generateQr(usuario: any, data: string) {
-    this.qrCode = JSON.stringify(usuario);
-    usuario.qrCode = this.qrCode;
     if (data === 'persona') {
+      this.qrCode = JSON.stringify(usuario);
+      usuario.qrCode = this.qrCode;
       this.alumnos.forEach((alumno: any) => {
         if (Array.isArray(alumno.personasAutorizadas) && alumno.personasAutorizadas.length > 0) {
           alumno.personasAutorizadas.forEach((p: any) => {
@@ -73,18 +73,27 @@ export class ViewPadresComponent implements OnInit {
       });
     }
     if (data === 'pool') {
+       usuario.alumno.forEach((al:any) => {
+        al.carPoolActivo = true;
+      });
+      this.qrCode = JSON.stringify(usuario);
+      usuario.qrCode = this.qrCode;
       this.carpool.splice(this.carpool.indexOf(usuario), 1);
       this.service.setCarPool(usuario);
       const carPool = this.service.getCarPool();
       this.carpool.push(carPool);
     }
     if (data === 'user') {
+      this.qrCode = JSON.stringify(usuario);
+      usuario.qrCode = this.qrCode;
       this.users.splice(this.users.indexOf(usuario), 1);
       this.service.setUser(usuario);
       const users = this.service.getUser();
       this.users.push(users);
     }
     if (data === 'alumno') {
+      this.qrCode = JSON.stringify(usuario);
+      usuario.qrCode = this.qrCode;
       this.alumnos.splice(this.alumnos.indexOf(usuario), 1);
       this.service.setAlumnos(usuario);
       const alumnos = this.service.getAlumnos();
@@ -100,7 +109,7 @@ export class ViewPadresComponent implements OnInit {
   agregarUser() {
     const dialogRef = this.dialog.open(NewUserDialog, {
       data: { action: 'nuevo' },
-      width: '40%'
+      width: '25%'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -168,7 +177,7 @@ export class ViewPadresComponent implements OnInit {
   agregarAlumno() {
     const dialogRef = this.dialog.open(FamiliaDialog, {
       data: {},
-      width: '60%'
+      width: '25%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -188,7 +197,7 @@ export class ViewPadresComponent implements OnInit {
   editarAlumno(alumno: any) {
     const dialogRef = this.dialog.open(FamiliaDialog, {
       data: alumno,
-      width: '60%'
+      width: '25%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -220,7 +229,7 @@ export class ViewPadresComponent implements OnInit {
   agregarPersona() {
     const dialogRef = this.dialog.open(PersonaAutorizadaDialog, {
       data: {},
-      width: '40%'
+      width: '25%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -252,7 +261,7 @@ export class ViewPadresComponent implements OnInit {
   editarPersona(persona: any) {
     const dialogRef = this.dialog.open(PersonaAutorizadaDialog, {
       data: persona,
-      width: '40%'
+      width: '25%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -299,7 +308,7 @@ export class ViewPadresComponent implements OnInit {
         action: 'Nuevo',
         data: this.alumnos
       },
-      width: '60%'
+      width: '27%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -322,7 +331,7 @@ export class ViewPadresComponent implements OnInit {
         action: 'editar',
         data: pool
       },
-      width: '60%'
+      width: '27%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
