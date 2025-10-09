@@ -32,7 +32,7 @@ import { SharedServiceService } from './shared/shared-service.service';
 import { LoginComponent } from './login/login.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { QRCodeModule } from 'angularx-qrcode';
-
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 
 @NgModule({
@@ -50,6 +50,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     LoginComponent
   ],
   imports: [
+    ZXingScannerModule,
     QRCodeModule,
     MatSnackBarModule,
     MatDialogModule,

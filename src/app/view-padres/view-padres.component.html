@@ -8,6 +8,22 @@
                     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center"
                         (selectedTabChange)="selectedTabChange($event)">
                         <mat-tab label="Parents">
+                            <div style="width: 24%;
+                                    text-align: center;
+                                    display: flex
+                                ;
+                                    flex-direction: column;
+                                    margin-left: 37%;
+                                    margin-top: 3rem;">
+                                   <zxing-scanner #scanner [autostart]="scanQrStart" (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+                                    <section *ngIf="qrResultString">
+                                        <div>
+                                            <small>Result</small>
+                                            <strong>{{ qrResultString }}</strong>
+                                        </div>
+                                        <button (click)="clearResult()">Clear</button>
+                                    </section>
+                            </div>
                             <div style="text-align: center;margin-top: 1rem;">
                                 <button mat-raised-button color="primary" (click)="agregarUser()">+
                                     Padres</button>

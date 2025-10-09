@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, viewChild, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,8 @@ import { NewUserDialog } from '../login/login.component';
 import { SafeUrl } from '@angular/platform-browser';
 import { QRCodeModule } from 'angularx-qrcode';
 import { MatIconModule } from '@angular/material/icon';
+import { ZXingScannerComponent } from '@zxing/ngx-scanner';
+import { BarcodeFormat, Result } from '@zxing/library'; // Import Result if you need detailed scan info
 
 
 @Component({
@@ -22,12 +24,17 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./view-padres.component.css']
 })
 export class ViewPadresComponent implements OnInit {
+   @ViewChild('scanner') scanner2!: ZXingScannerComponent;
+  qrResultString!: string;
+  qrResult!: Result; // Optional: for more detailed scan data  
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   alumnos: any = [];
   carpool: any = [];
   users: any = [];
   qrCode: string = '';
+  format = BarcodeFormat.QR_CODE;
+  scanQrStart:boolean = false;
 
   constructor(private _snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, public service: SharedServiceService) { }
 
@@ -44,6 +51,19 @@ export class ViewPadresComponent implements OnInit {
     if (carpool) {
       this.carpool.push(carpool);
     }
+  }
+
+    onCodeResult(resultString: string) {
+      console.log(resultString);
+      
+    this.qrResultString = resultString;
+    // If you need the full Result object:
+    // this.qrResult = result;
+  }
+
+  clearResult(): void {
+    this.qrResultString = '';
+    //this.qrResult = null;
   }
 
   verQr(user: any) {
