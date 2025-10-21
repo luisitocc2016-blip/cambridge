@@ -17,6 +17,8 @@ export class HeaderComponent {
       this.titulo = 'Class Room';
     } else if (this.router.url.includes('/perfil-alumno')) {
       this.titulo = 'Perfil Alumno';
+    } else if (this.router.url.includes('/scanner')) {
+      this.titulo = 'Scanner';
     } else if (this.router.url.includes('/administracion')) {
       this.titulo = 'Administracion';
     } else if (this.router.url.includes('/padres')) {
@@ -55,5 +57,9 @@ export class HeaderComponent {
   padres(): void {
     this.titulo = 'Hijos';
     this.router.navigate(['/padres']);
+  }
+  abrirScanner(): void {
+     this.titulo = 'Scanner';
+    this.router.navigate(['/scanner']);
   }
 }

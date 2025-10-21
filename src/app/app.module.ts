@@ -30,9 +30,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedServiceService } from './shared/shared-service.service';
 import { LoginComponent } from './login/login.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ScannerComponent } from './scanner/scanner.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -47,9 +49,11 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     ViewMaestraComponent,
     ViewAlumnoComponent,
     ViewPadresComponent,
-    LoginComponent
+    LoginComponent,
+    ScannerComponent
   ],
   imports: [
+    MatSelectModule,
     ZXingScannerModule,
     QRCodeModule,
     MatSnackBarModule,
@@ -73,6 +77,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
+      { path: 'scanner', component: ScannerComponent },
       { path: 'dashBoard', component: DashBoardComponent },
       { path: 'padres', component: ViewPadresComponent },
       { path: 'administracion', component: DashBoardComponent },

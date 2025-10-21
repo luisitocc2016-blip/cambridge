@@ -27,17 +27,16 @@
       <mat-label>Email</mat-label>
       <input matInput formControlName="email">
     </mat-form-field>
-    <!-- <mat-form-field>
-    <mat-label>Grupo</mat-label>
-    <input matInput formControlName="grupo">
-    </mat-form-field> -->
     <mat-form-field>
       <mat-label>Telefono</mat-label>
       <input matInput formControlName="telefono">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Parentesco</mat-label>
-      <input matInput formControlName="parentesco">
+      <mat-select matNativeControl formControlName="parentesco">
+        <mat-option value="madre">Madre</mat-option>
+        <mat-option value="padre">Padre</mat-option>
+      </mat-select>
     </mat-form-field>
     <div>
       <p>Datos Vehiculo</p>

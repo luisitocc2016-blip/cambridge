@@ -6,10 +6,13 @@ import { Injectable } from '@angular/core';
 export class SharedServiceService {
   alumnos: any = [];
   users: any = [];
+  carpool: any = [];
+  personasAutorizadas: any = [];
   constructor() { }
 
 
   setPersonaAutorizada(data: any) {
+    this.personasAutorizadas.push(data);
     localStorage.setItem('personaAutorizada', JSON.stringify(data));
   }
 
@@ -17,11 +20,14 @@ export class SharedServiceService {
     const personaAutorizada = localStorage.getItem('personaAutorizada');
     return personaAutorizada ? JSON.parse(personaAutorizada) : null;
   }
+
   clearPersonaAutorizada() {
+    this.personasAutorizadas = [];
     localStorage.removeItem('personaAutorizada');
   }
 
   setCarPool(data: any) {
+    this.carpool.push(data);
     localStorage.setItem('carPool', JSON.stringify(data));
   }
 
@@ -31,6 +37,7 @@ export class SharedServiceService {
   }
 
   clearCarPool() {
+    this.carpool = [];
     localStorage.removeItem('carPool');
   }
 
@@ -39,12 +46,14 @@ export class SharedServiceService {
     localStorage.setItem('alumnos', JSON.stringify(data));
   }
 
+
   getAlumnos() {
     const alumnos = localStorage.getItem('alumnos');
     return alumnos ? JSON.parse(alumnos) : null;
   }
 
   clearAlumnos() {
+    this.alumnos = [];
     localStorage.removeItem('alumnos');
   }
 
@@ -59,6 +68,7 @@ export class SharedServiceService {
   }
 
   clearUser() {
+    this.users = []
     localStorage.removeItem('user');
   }
 }

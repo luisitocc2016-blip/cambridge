@@ -21,7 +21,13 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Parentesco</mat-label>
-      <input matInput formControlName="parentesco">
+      <mat-select  matNativeControl formControlName="parentesco">
+        <mat-option value="abuelo">Abuelo(a)</mat-option>
+        <mat-option value="primo">Primo(a)</mat-option>
+        <mat-option value="hermano(a)">Hermano(a)</mat-option>
+        <mat-option value="tio(a)">Tio(a)</mat-option>
+        <mat-option value="amigo(a)">Amigo(a)</mat-option>
+      </mat-select >
     </mat-form-field>
     <div>
       <p>Datos Vehiculo</p>

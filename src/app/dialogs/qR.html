@@ -6,7 +6,12 @@
 </h1>
 <div mat-dialog-content>
   <div style="text-align: center;">
-    <qrcode  (qrCodeURL)="onChangeURL($event)" [qrdata]="qrCode" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+    <qrcode  (qrCodeURL)="onChangeURL($event)" [qrdata]="qrCode" [width]="300" [errorCorrectionLevel]="'M'" 
+    [colorDark]="'#000000ff'"
+    [colorLight]="'#ffffffff'"
+    [elementType]="'svg'"
+    [margin]="0"
+    [scale]="1"></qrcode>
   </div>
 </div>
 <div mat-dialog-actions style="display: flex; justify-content: space-evenly;gap: 1rem;">

@@ -14,8 +14,7 @@ import { NewUserDialog } from '../login/login.component';
 import { SafeUrl } from '@angular/platform-browser';
 import { QRCodeModule } from 'angularx-qrcode';
 import { MatIconModule } from '@angular/material/icon';
-import { ZXingScannerComponent } from '@zxing/ngx-scanner';
-import { BarcodeFormat, Result } from '@zxing/library'; // Import Result if you need detailed scan info
+import { MatSelectModule } from '@angular/material/select';
 
 
 @Component({
@@ -24,17 +23,13 @@ import { BarcodeFormat, Result } from '@zxing/library'; // Import Result if you 
   styleUrls: ['./view-padres.component.css']
 })
 export class ViewPadresComponent implements OnInit {
-   @ViewChild('scanner') scanner2!: ZXingScannerComponent;
-  qrResultString!: string;
-  qrResult!: Result; // Optional: for more detailed scan data  
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   alumnos: any = [];
   carpool: any = [];
   users: any = [];
+  personasAutorizadas: any = [];
   qrCode: string = '';
-  format = BarcodeFormat.QR_CODE;
-  scanQrStart:boolean = false;
 
   constructor(private _snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, public service: SharedServiceService) { }
 
@@ -51,50 +46,37 @@ export class ViewPadresComponent implements OnInit {
     if (carpool) {
       this.carpool.push(carpool);
     }
-  }
-
-    onCodeResult(resultString: string) {
-      console.log(resultString);
-      
-    this.qrResultString = resultString;
-    // If you need the full Result object:
-    // this.qrResult = result;
-  }
-
-  clearResult(): void {
-    this.qrResultString = '';
-    //this.qrResult = null;
+    const personasAutorizadas = this.service.getPersonaAutorizada();
+    if (personasAutorizadas) {
+      this.personasAutorizadas.push(personasAutorizadas);
+    }
   }
 
   verQr(user: any) {
     this.dialog.open(qRDialog, {
       data: user.qrCode,
-      width: '20%',
+      width: '50%',
       disableClose: false
     });
   }
 
   generateQr(usuario: any, data: string) {
+    this.qrCode = '';
     if (data === 'persona') {
       this.qrCode = JSON.stringify(usuario);
-      usuario.qrCode = this.qrCode;
-      this.alumnos.forEach((alumno: any) => {
-        if (Array.isArray(alumno.personasAutorizadas) && alumno.personasAutorizadas.length > 0) {
-          alumno.personasAutorizadas.forEach((p: any) => {
-            const index = alumno.personasAutorizadas.indexOf(usuario);
-            if (index !== -1) {
-              alumno.personasAutorizadas.splice(index, 1);
-            }
-            this.alumnos.forEach((alumno: any) => {
-              alumno.personasAutorizadas.push(usuario);
-            });
-          });
-        }
-      });
+      const findPersona = this.personasAutorizadas.find((p: any) => p.nombre === usuario.nombre);
+      if (findPersona) {
+        findPersona.qrCode = this.qrCode;
+      }
+      this.service.setPersonaAutorizada(findPersona);
+      const personasAutorizadas = this.service.getPersonaAutorizada();
+      this.personasAutorizadas = [];
+      this.personasAutorizadas.push(personasAutorizadas);
     }
     if (data === 'pool') {
-       usuario.alumno.forEach((al:any) => {
-        al.carPoolActivo = true;
+      usuario.qrCarPool = true;
+      usuario.alumno.forEach((al: any) => {
+        al.qrCarPool = true;
       });
       this.qrCode = JSON.stringify(usuario);
       usuario.qrCode = this.qrCode;
@@ -104,6 +86,7 @@ export class ViewPadresComponent implements OnInit {
       this.carpool.push(carPool);
     }
     if (data === 'user') {
+      usuario.qrUser = true;
       this.qrCode = JSON.stringify(usuario);
       usuario.qrCode = this.qrCode;
       this.users.splice(this.users.indexOf(usuario), 1);
@@ -112,6 +95,7 @@ export class ViewPadresComponent implements OnInit {
       this.users.push(users);
     }
     if (data === 'alumno') {
+      usuario.qrAlumno = true;
       this.qrCode = JSON.stringify(usuario);
       usuario.qrCode = this.qrCode;
       this.alumnos.splice(this.alumnos.indexOf(usuario), 1);
@@ -121,7 +105,7 @@ export class ViewPadresComponent implements OnInit {
     }
     this.dialog.open(qRDialog, {
       data: this.qrCode,
-      width: '20%',
+      width: '50%',
       disableClose: false
     });
   }
@@ -133,8 +117,12 @@ export class ViewPadresComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        /*  if(this.alumnos.length > 0){
+           result.hijos = this.alumnos;
+         } */
         this.service.setUser(result);
         const users = this.service.getUser();
+        this.users = [];
         this.users.push(users);
         this._snackBar.open(`${result.nombre} ha sido Agregado`, 'Cerrar', {
           duration: 2000,
@@ -151,13 +139,17 @@ export class ViewPadresComponent implements OnInit {
         action: 'edit',
         user
       },
-      width: '40%'
+      width: '25%'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.users.splice(this.alumnos.indexOf(user), 1);
+        /*  if(!result.hasOwnProperty('hijos')){
+           result.hijos = this.alumnos;
+         }  */
+        this.service.clearUser();
         this.service.setUser(result);
         const users = this.service.getUser();
+        this.users = [];
         this.users.push(users);
         this._snackBar.open(`${user.nombre} ha sido Actualizado`, 'Cerrar', {
           duration: 2000,
@@ -170,7 +162,7 @@ export class ViewPadresComponent implements OnInit {
   }
 
   borrarUser(user: any) {
-    this.users.splice(this.users.indexOf(user), 1);
+    this.users = [];
     this.service.clearUser(); // Clear the user from the service as well
     this._snackBar.open(`${user.nombre} ha sido Eliminado`, 'Cerrar', {
       duration: 2000,
@@ -202,6 +194,14 @@ export class ViewPadresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        /*  if(this.users.length > 0){
+             this.users[0].hijos = [];
+           this.users[0].hijos.push(result);
+         }
+         this.service.clearUser();
+         this.service.setUser(this.users[0]); */
+        //set alumnos
+        this.alumnos = [];
         this.service.setAlumnos(result);
         const alumnos = this.service.getAlumnos();
         this.alumnos.push(alumnos);
@@ -239,6 +239,7 @@ export class ViewPadresComponent implements OnInit {
 
   borrarAlumno(alumno: any) {
     this.alumnos.splice(this.alumnos.indexOf(alumno), 1);
+    this.service.clearAlumnos();
     this._snackBar.open(`${alumno.nombre} ha sido Eliminado`, 'Cerrar', {
       duration: 2000,
       horizontalPosition: this.horizontalPosition,
@@ -254,21 +255,14 @@ export class ViewPadresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        let existe = false;
-        this.alumnos.forEach((alumno: any) => {
-          if (Array.isArray(alumno.personasAutorizadas) && alumno.personasAutorizadas.length > 0) {
-            alumno.personasAutorizadas.forEach((p: any) => {
-              if (p.nombre.toUpperCase() === result.nombre.toUpperCase()) {
-                existe = true;
-              }
-            });
-          }
-        });
-        if (!existe) {
-          this.alumnos.forEach((alumno: any) => {
-            alumno.personasAutorizadas.push(result);
-          });
-        }
+        result.qrCode = '';
+        result.qrPersonaAutorizada = true;
+        // result.hijos = this.alumnos;
+        this.service.setPersonaAutorizada(result);
+        const personasAutorizadas = this.service.getPersonaAutorizada();
+        this.personasAutorizadas = [];
+        this.personasAutorizadas.push(personasAutorizadas);
+
         this._snackBar.open(`${result.nombre} ha sido Agregado`, 'Cerrar', {
           duration: 2000,
           horizontalPosition: this.horizontalPosition,
@@ -286,19 +280,11 @@ export class ViewPadresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.alumnos.forEach((alumno: any) => {
-          if (Array.isArray(alumno.personasAutorizadas) && alumno.personasAutorizadas.length > 0) {
-            alumno.personasAutorizadas.forEach((p: any) => {
-              const index = alumno.personasAutorizadas.indexOf(persona);
-              if (index !== -1) {
-                alumno.personasAutorizadas.splice(index, 1);
-              }
-              this.alumnos.forEach((alumno: any) => {
-                alumno.personasAutorizadas.push(result);
-              });
-            });
-          }
-        });
+        this.service.clearPersonaAutorizada();
+        this.service.setPersonaAutorizada(result);
+        const personasAutorizadas = this.service.getPersonaAutorizada();
+        this.personasAutorizadas = [];
+        this.personasAutorizadas.push(personasAutorizadas);
         this._snackBar.open(`${result.nombre} ha sido Actualizado`, 'Cerrar', {
           duration: 2000,
           horizontalPosition: this.horizontalPosition,
@@ -309,12 +295,8 @@ export class ViewPadresComponent implements OnInit {
   }
 
   borrarPersona(persona: any) {
-    this.alumnos.forEach((alumno: any) => {
-      const index = alumno.personasAutorizadas.indexOf(persona);
-      if (index !== -1) {
-        alumno.personasAutorizadas.splice(index, 1);
-      }
-    });
+    this.service.clearPersonaAutorizada();
+    this.personasAutorizadas = [];
     this._snackBar.open(`${persona.nombre} ha sido Eliminado`, 'Cerrar', {
       duration: 2000,
       horizontalPosition: this.horizontalPosition,
@@ -335,6 +317,7 @@ export class ViewPadresComponent implements OnInit {
       if (result) {
         this.service.setCarPool(result);
         const carPool = this.service.getCarPool();
+        this.carpool = [];
         this.carpool.push(carPool);
         this._snackBar.open(`${result.nombre} ha sido Agregado`, 'Cerrar', {
           duration: 2000,
@@ -359,6 +342,7 @@ export class ViewPadresComponent implements OnInit {
         this.carpool.splice(this.carpool.indexOf(pool), 1);
         this.service.setCarPool(result);
         const carPool = this.service.getCarPool();
+        this.carpool = [];
         this.carpool.push(carPool);
         this._snackBar.open(`${result.nombre} ha sido Actualizado`, 'Cerrar', {
           duration: 2000,
@@ -371,6 +355,8 @@ export class ViewPadresComponent implements OnInit {
 
   boarrarCarPool(pool: any) {
     this.carpool.splice(this.carpool.indexOf(pool), 1);
+    this.service.clearCarPool();
+    this.carpool = [];
     this._snackBar.open(`${pool.nombre} ha sido Eliminado`, 'Cerrar', {
       duration: 2000,
       horizontalPosition: this.horizontalPosition,
@@ -401,6 +387,7 @@ export class CarPoolDialog {
     color: new FormControl(''),
     fotoUrl: new FormControl(''),
     alumno: new FormArray([]),
+    alumnoSeleccionado: new FormControl(''),
   });
   constructor(
     private _snackBar: MatSnackBar,
@@ -413,6 +400,13 @@ export class CarPoolDialog {
         this.titulo = 'Editar Car Pool';
         this.selectedFile = data.data.fotoUrl || this.selectedFile;
         this.profileForm.patchValue(data.data);
+        if (data.data.alumno && Array.isArray(data.data.alumno)) {
+          const alumnoArray = this.profileForm.get('alumno') as FormArray;
+          data.data.alumno.forEach((alumno: any) => {
+            alumno.seleccionado = true;
+            alumnoArray.push(new FormControl(alumno));
+          });
+        }
       } else {
         this.titulo = 'Nuevo Car Pool';
       }
@@ -422,8 +416,9 @@ export class CarPoolDialog {
   seleccionar(event: MatCheckboxChange, alumno: any) {
     if (event.checked) {
       alumno.seleccionado = true;
-      const alumnoArray = this.profileForm.get('alumno') as FormArray;
-      alumnoArray.push(new FormControl(alumno));
+      this.profileForm.patchValue({ alumnoSeleccionado: alumno.nombre });
+      /*  const alumnoArray = this.profileForm.get('alumno') as FormArray;
+       alumnoArray.push(new FormControl(alumno)); */
       this._snackBar.open(`alumno ${alumno.nombre} seleccionado`, 'Cerrar', {
         duration: 2000,
         horizontalPosition: this.horizontalPosition,
@@ -466,36 +461,34 @@ export class CarPoolDialog {
   imports: [CommonModule, MatDialogModule, QRCodeModule, MatIconModule, MatButtonModule],
 })
 export class qRDialog {
-  selectedFile: any = null;
   qrCode: string = '';
   qrCodeDownloadLink: SafeUrl = "";
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<FamiliaDialog>
   ) {
-    this.selectedFile = '../../assets/avatar.png';
     if (data) {
       this.qrCode = data;
     }
   }
 
   async shareQrCode() {
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: 'My QR Code',
-        text: 'Scan this QR code!',
-        url: this.qrCode // Or a URL to the generated image
-      });
-      console.log('QR Code shared successfully');
-    } catch (error) {
-      console.error('Error sharing QR Code:', error);
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'My QR Code',
+          text: 'Scan this QR code!',
+          url: this.qrCode // Or a URL to the generated image
+        });
+        console.log('QR Code shared successfully');
+      } catch (error) {
+        console.error('Error sharing QR Code:', error);
+      }
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      alert('Web Share API is not supported in this browser.');
     }
-  } else {
-    // Fallback for browsers that don't support Web Share API
-    alert('Web Share API is not supported in this browser.');
   }
-}
   onCloseClick(): void {
     this.dialogRef.close();
   }
@@ -520,18 +513,9 @@ export class FamiliaDialog {
   familia = new FormGroup({
     nombre: new FormControl(''),
     grado: new FormControl(''),
-    alergias: new FormControl(''),
-    padre: new FormControl(''),
-    telPadre: new FormControl(''),
-    correoPadre: new FormControl(''),
-    madre: new FormControl(''),
-    telMadre: new FormControl(''),
-    correoMadre: new FormControl(''),
     foto: new FormControl(''),
-    maestro: new FormControl(''),
     grupo: new FormControl(''),
     fotoUrl: new FormControl(''),
-    personasAutorizadas: new FormArray([]),
   });
   constructor(
     private _snackBar: MatSnackBar,
@@ -563,7 +547,7 @@ export class FamiliaDialog {
   selector: 'app-dialog',
   templateUrl: '../dialogs/agregarPersona.html',
   standalone: true,
-  imports: [MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatSnackBarModule, MatSelectModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule],
 })
 export class PersonaAutorizadaDialog {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';

@@ -2,3 +2,16 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+ .success-snackbar {
+  /* If using Angular Material MDC components (v15+), you might need to override MDC variables */
+  --mdc-snackbar-container-color: #17915e;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: blue; /* If you have an action button */
+}
+
+.error-snackbar {
+  /* If using Angular Material MDC components (v15+), you might need to override MDC variables */
+  --mdc-snackbar-container-color: red;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: blue; /* If you have an action button */
+}

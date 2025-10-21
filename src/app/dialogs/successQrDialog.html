@@ -1,0 +1,68 @@
+<h1 mat-dialog-title>{{titulo}}</h1>
+<div mat-dialog-content>
+  <div>
+    <p>Datos Generales del QR</p>
+    <div style="
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+      ">
+      <div style="width: auto;margin-right: 10px;">
+        <mat-card class="example-card">
+          <mat-card-header style="display: flex; flex-direction: column">
+            <div style="text-align: center">
+              <img [src]="data.user.fotoUrl" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
+            </div>
+            <mat-card-title style="font-size: medium">{{data.user.nombre}}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content style="margin-top: 1rem;">
+            <div *ngIf="data.parentesco === 'Tutor' || data.parentesco === 'Persona Autorizada'">
+              <p>Parentesco - {{data.user.parentesco}}</p>
+            </div>
+            <div *ngIf="data.parentesco === 'Alumno'">
+              <p>Maestro(a) - {{data.user.maestro}}</p>
+              <p>Grado - {{data.user.grado}} {{data.user.grupo}}</p>
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="data.parentesco !== 'Alumno'">
+    <div *ngIf="data.parentesco === 'Tutor'">
+      <p>Hijos</p>
+    </div>
+    <div>
+      <p *ngIf="data.parentesco === 'Persona Autorizada'">Alumnos Autorizados</p>
+    </div>
+
+    <div style="
+        display: flex;
+        justify-content: start;
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+      ">
+      <div *ngFor="let hijo of data.user.hijos; let i = index" style="width: auto;margin-right: 10px;">
+        <mat-card class="example-card">
+          <mat-card-header style="display: flex; flex-direction: column">
+            <div style="text-align: center">
+              <img [src]="hijo.fotoUrl" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
+            </div>
+            <mat-card-title style="font-size: medium">{{hijo.nombre}}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content style="margin-top: 1rem;">
+            <p>Maestro(a) - {{hijo.maestro}}</p>
+            <p>Salon - {{hijo.grado}} {{hijo.grupo}}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: flex-end; gap: 1rem">
+  <button mat-raised-button color="primary" (click)="onNoClick()">
+    Cerrar
+  </button>
+</div>
