@@ -26,7 +26,7 @@ export class ScannerComponent {
   @ViewChild('scanner') scanner2!: ZXingScannerComponent;
   qrResultString: any = [];
   qrResult!: Result; // Optional: for more detailed scan data 
-  scannerEnabled: boolean = false;
+  scannerEnabled: boolean = true;
   format = [BarcodeFormat.QR_CODE];
   availableDevices: MediaDeviceInfo[] = [];
   selectedDevice: MediaDeviceInfo | undefined;
@@ -53,19 +53,11 @@ export class ScannerComponent {
     }
     const personasAutorizadas = this.service.getPersonaAutorizada();
     this.personasAutorizadas.push(personasAutorizadas);
-
-    console.log(this.users);
-    console.log(this.alumnos);
-    console.log(this.carpool);
-    console.log(this.personasAutorizadas);
-
-
-
-
   }
 
 
   onScanSuccess(resultString: string) {
+    this.stopScanner();
     this.qrResultString.push(JSON.parse(resultString));
     if (Array.isArray(this.qrResultString) && this.qrResultString.length > 0) {
       if (this.qrResultString[0].hasOwnProperty('qrUser')) {

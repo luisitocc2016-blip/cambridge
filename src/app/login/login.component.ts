@@ -44,7 +44,7 @@ export class LoginComponent {
   newUser() {
     const dialogRef = this.dialog.open(NewUserDialog, {
       data: {},
-      width: '40%'
+      width: '30%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -82,7 +82,6 @@ export class NewUserDialog {
   newUserForm = new FormGroup({
     nombre: new FormControl(''),
     passWord: new FormControl(''),
-    //grupo: new FormControl(''),
     email: new FormControl(''),
     telefono: new FormControl(''),
     parentesco: new FormControl(''),
