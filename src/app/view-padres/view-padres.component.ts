@@ -31,7 +31,18 @@ export class ViewPadresComponent implements OnInit {
   personasAutorizadas: any = [];
   qrCode: string = '';
 
-  constructor(private _snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, public service: SharedServiceService) { }
+  constructor(private _snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, public service: SharedServiceService) {
+
+    this.service.carpoolNotificado.subscribe((data) => {
+      if (data) {
+        const carpool = this.service.getCarPool();
+        if (carpool) {
+          this.carpool = [];
+          this.carpool.push(carpool);
+        }
+      }
+    });
+  }
 
   ngOnInit(): void {
     const users = this.service.getUser();
@@ -63,6 +74,7 @@ export class ViewPadresComponent implements OnInit {
   generateQr(usuario: any, data: string) {
     this.qrCode = '';
     if (data === 'persona') {
+      usuario.qrPersonaAutorizada = true;
       this.qrCode = JSON.stringify(usuario);
       const findPersona = this.personasAutorizadas.find((p: any) => p.nombre === usuario.nombre);
       if (findPersona) {
@@ -257,7 +269,6 @@ export class ViewPadresComponent implements OnInit {
       if (result) {
         result.qrCode = '';
         result.qrPersonaAutorizada = true;
-        // result.hijos = this.alumnos;
         this.service.setPersonaAutorizada(result);
         const personasAutorizadas = this.service.getPersonaAutorizada();
         this.personasAutorizadas = [];
@@ -315,15 +326,19 @@ export class ViewPadresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        result.status = 'pendiente';
+        result.mensaje = 'Nueva solicitud de CarPool';
+        result.quienEnvia = this.users[0].nombre;
         this.service.setCarPool(result);
         const carPool = this.service.getCarPool();
         this.carpool = [];
         this.carpool.push(carPool);
-        this._snackBar.open(`${result.nombre} ha sido Agregado`, 'Cerrar', {
+        this._snackBar.open(`${result.nombre} se ha mandado a aprobacion`, 'Cerrar', {
           duration: 2000,
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
         });
+        this.service.enviarNotificacion.next(true);
       }
     });
   }
@@ -378,6 +393,9 @@ export class CarPoolDialog {
   titulo: string = '';
   selectedFile: any = null;
   profileForm = new FormGroup({
+    status: new FormControl(''),
+    mensaje: new FormControl(''),
+    quienEnvia: new FormControl(''),
     nombre: new FormControl(''),
     telefono: new FormControl(''),
     correo: new FormControl(''),
@@ -398,6 +416,17 @@ export class CarPoolDialog {
     if (data) {
       if (data.action && data.action === 'editar') {
         this.titulo = 'Editar Car Pool';
+        this.selectedFile = data.data.fotoUrl || this.selectedFile;
+        this.profileForm.patchValue(data.data);
+        if (data.data.alumno && Array.isArray(data.data.alumno)) {
+          const alumnoArray = this.profileForm.get('alumno') as FormArray;
+          data.data.alumno.forEach((alumno: any) => {
+            alumno.seleccionado = true;
+            alumnoArray.push(new FormControl(alumno));
+          });
+        }
+      } else if (data.action && data.action === 'aprobar') {
+        this.titulo = 'Aprobar Car Pool';
         this.selectedFile = data.data.fotoUrl || this.selectedFile;
         this.profileForm.patchValue(data.data);
         if (data.data.alumno && Array.isArray(data.data.alumno)) {
@@ -451,6 +480,16 @@ export class CarPoolDialog {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  declinar(): void {
+    this.profileForm.patchValue({ status: 'declinado' });
+    this.dialogRef.close(this.profileForm.value);
+  }
+
+  aprobar(): void {
+    this.profileForm.patchValue({ status: 'aprobado' });
+    this.dialogRef.close(this.profileForm.value);
   }
 }
 

@@ -16,9 +16,21 @@
                             <mat-icon>menu</mat-icon>
                         </button>
                     </div>
+                    <div style="display: flex;margin-right: 2rem;">
+                        <button mat-button [matMenuTriggerFor]="notificationsMenu">
+                            <mat-icon [matBadge]="notifications.length">notifications</mat-icon>
+                        </button>
+                    </div>
                 </mat-toolbar-row>
             </mat-toolbar>
         </p>
+        <mat-menu #notificationsMenu="matMenu">
+            <div *ngFor="let notification of notifications">
+                <button mat-menu-item (click)="verNotification(notification)">
+                    {{notification.mensaje}} de {{notification.quienEnvia}}
+                </button>
+            </div>
+        </mat-menu>
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="padres()">Padres</button>
             <button mat-menu-item (click)="abrirScanner()">Scanner</button>

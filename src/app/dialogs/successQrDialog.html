@@ -21,7 +21,6 @@
               <p>Parentesco - {{data.user.parentesco}}</p>
             </div>
             <div *ngIf="data.parentesco === 'Alumno'">
-              <p>Maestro(a) - {{data.user.maestro}}</p>
               <p>Grado - {{data.user.grado}} {{data.user.grupo}}</p>
             </div>
 
@@ -53,7 +52,6 @@
             <mat-card-title style="font-size: medium">{{hijo.nombre}}</mat-card-title>
           </mat-card-header>
           <mat-card-content style="margin-top: 1rem;">
-            <p>Maestro(a) - {{hijo.maestro}}</p>
             <p>Salon - {{hijo.grado}} {{hijo.grupo}}</p>
           </mat-card-content>
         </mat-card>

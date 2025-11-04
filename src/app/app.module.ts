@@ -35,6 +35,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ScannerComponent } from './scanner/scanner.component';
 import { MatSelectModule } from '@angular/material/select';
+import {MatBadgeModule} from '@angular/material/badge';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { MatSelectModule } from '@angular/material/select';
     ScannerComponent
   ],
   imports: [
+    MatBadgeModule,
     MatSelectModule,
     ZXingScannerModule,
     QRCodeModule,

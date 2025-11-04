@@ -1,5 +1,9 @@
 <h1 mat-dialog-title>{{titulo}}</h1>
 <div mat-dialog-content>
+  <div *ngIf="data.action === 'aprobar'">
+    <h3>Familia Solicitante: {{data.data.quienEnvia }}</h3>
+
+  </div>
   <div *ngIf="data.action === 'Nuevo'">
     <p>Seleccione Familia</p>
     <div style="
@@ -29,8 +33,8 @@
       </div>
     </div>
   </div>
-  <div *ngIf="data.action === 'editar'">
-    <p>Familia Seleccionada</p>
+  <div *ngIf="data.action === 'editar' || data.action === 'aprobar'">
+    <p>Recoger en escuela a los siguientes alumnos:</p>
     <div style="
         display: flex;
         justify-content: space-evenly;
@@ -58,10 +62,10 @@
       </div>
     </div>
   </div>
-  <div>
+  <div *ngIf="data.action !== 'aprobar'">
     <p>Informacion General del Car-Pool</p>
   </div>
-  <div style="text-align: center">
+  <div *ngIf="data.action !== 'aprobar'" style="text-align: center">
     <div>
       <img id="foto" [src]="selectedFile" alt="" height="170rem" width="200rem" style="border-radius: 10%" />
     </div>
@@ -72,7 +76,8 @@
       </button>
     </div>
   </div>
-  <form [formGroup]="profileForm" style="display: flex; flex-direction: column; margin-top: 2.5rem">
+  <form *ngIf="data.action !== 'aprobar'" [formGroup]="profileForm"
+    style="display: flex; flex-direction: column; margin-top: 2.5rem">
     <div>
       <p>Datos Generales</p>
     </div>
@@ -80,10 +85,10 @@
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre" />
     </mat-form-field>
-    <mat-form-field>
+    <!-- <mat-form-field>
       <mat-label>Tel</mat-label>
       <input matInput formControlName="telefono" />
-    </mat-form-field>
+    </mat-form-field> -->
     <mat-form-field>
       <mat-label>Correo</mat-label>
       <input matInput formControlName="correo" />
@@ -109,7 +114,15 @@
     </mat-form-field>
   </form>
 </div>
-<div mat-dialog-actions style="display: flex; justify-content: flex-end; gap: 1rem">
+<div *ngIf="data.action === 'aprobar'" mat-dialog-actions style="display: flex; justify-content: flex-end; gap: 1rem">
+  <button mat-raised-button color="secondary" (click)="declinar()">
+    Declinar
+  </button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="profileForm.value" cdkFocusInitial (click)="aprobar()">
+    Aprobar
+  </button>
+</div>
+<div *ngIf="data.action !== 'aprobar'" mat-dialog-actions style="display: flex; justify-content: flex-end; gap: 1rem">
   <button mat-raised-button color="secondary" (click)="onNoClick()">
     Cancelar
   </button>

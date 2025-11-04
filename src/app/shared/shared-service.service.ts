@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,13 @@ export class SharedServiceService {
   users: any = [];
   carpool: any = [];
   personasAutorizadas: any = [];
-  constructor() { }
+  enviarNotificacion: BehaviorSubject<any>;
+  carpoolNotificado: BehaviorSubject<any>;
+
+  constructor() {
+    this.enviarNotificacion = new BehaviorSubject<any>(null);
+    this.carpoolNotificado = new BehaviorSubject<any>(null);
+  }
 
 
   setPersonaAutorizada(data: any) {

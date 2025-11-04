@@ -90,30 +90,33 @@
                                 <div
                                     style="display: flex;justify-content: space-evenly;margin-top: 3.5rem;margin-bottom: 2rem;">
                                     <div *ngFor="let pool of carpool; let i = index">
-                                        <mat-card class="example-card">
-                                            <mat-card-header style="display: flex; flex-direction: column;">
-                                                <div style="text-align: center;">
-                                                    <img [src]="pool.fotoUrl" alt="" height="200rem" width="250rem"
-                                                        style="border-radius:10%;">
-                                                </div>
-                                                <mat-card-title
-                                                    style="font-size: medium; margin-right: 1rem;">{{pool.nombre}}</mat-card-title>
-                                            </mat-card-header>
-                                            <mat-card-content>
-                                            </mat-card-content>
-                                            <mat-card-actions>
-                                                <div *ngIf="pool.qrCode">
-                                                    <button mat-button (click)="verQr(pool)">Ver QR</button>
-                                                </div>
-                                                <div *ngIf="!pool.qrCode">
-                                                    <button mat-button (click)="generateQr(pool, 'pool')">Crear
-                                                        QR</button>
-                                                </div>
-                                                <button mat-button (click)="editarCarPool(pool,i)">Editar</button>
-                                                <button mat-button style="color: red;"
-                                                    (click)="boarrarCarPool(pool)">Borrar</button>
-                                            </mat-card-actions>
-                                        </mat-card>
+                                        <div *ngIf="pool.status === 'aprobado'">
+                                            <mat-card class="example-card">
+                                                <mat-card-header style="display: flex; flex-direction: column;">
+                                                    <div style="text-align: center;">
+                                                        <img [src]="pool.fotoUrl" alt="" height="200rem" width="250rem"
+                                                            style="border-radius:10%;">
+                                                    </div>
+                                                    <mat-card-title
+                                                        style="font-size: medium; margin-right: 1rem;">{{pool.nombre}}</mat-card-title>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                </mat-card-content>
+                                                <mat-card-actions>
+                                                    <div *ngIf="pool.qrCode">
+                                                        <button mat-button (click)="verQr(pool)">Ver QR</button>
+                                                    </div>
+                                                    <div *ngIf="!pool.qrCode">
+                                                        <button mat-button (click)="generateQr(pool, 'pool')">Crear
+                                                            QR</button>
+                                                    </div>
+                                                    <button mat-button (click)="editarCarPool(pool,i)">Editar</button>
+                                                    <button mat-button style="color: red;"
+                                                        (click)="boarrarCarPool(pool)">Borrar</button>
+                                                </mat-card-actions>
+                                            </mat-card>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
