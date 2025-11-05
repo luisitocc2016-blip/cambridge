@@ -16,7 +16,7 @@
         <mat-card class="example-card">
           <mat-card-header style="display: flex; flex-direction: column">
             <div style="text-align: center">
-              <img [src]="alumno.fotoUrl" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
+              <img src="assets/nina.jpg" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
             </div>
             <mat-card-title style="font-size: medium">{{alumno.nombre}}</mat-card-title>
           </mat-card-header>
@@ -45,7 +45,7 @@
         <mat-card class="example-card">
           <mat-card-header style="display: flex; flex-direction: column">
             <div style="text-align: center">
-              <img [src]="alumno.fotoUrl" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
+              <img src="assets/nina.jpg" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
             </div>
             <mat-card-title style="font-size: medium">{{alumno.nombre}}</mat-card-title>
           </mat-card-header>
@@ -67,7 +67,7 @@
   </div>
   <div *ngIf="data.action !== 'aprobar'" style="text-align: center">
     <div>
-      <img id="foto" [src]="selectedFile" alt="" height="170rem" width="200rem" style="border-radius: 10%" />
+      <img id="foto" src="assets/tia.jfif" alt="" height="170rem" width="200rem" style="border-radius: 10%" />
     </div>
     <div style="margin-top: 1rem">
       <input [hidden]="true" type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" />
@@ -126,7 +126,15 @@
   <button mat-raised-button color="secondary" (click)="onNoClick()">
     Cancelar
   </button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="profileForm.value" cdkFocusInitial>
-    Guardar
-  </button>
+  <div *ngIf="data.action === 'Nuevo'">
+    <button mat-raised-button color="primary" [mat-dialog-close]="profileForm.value" cdkFocusInitial>
+      Enviar
+    </button>
+  </div>
+  <div *ngIf="data.action === 'editar'">
+    <button mat-raised-button color="primary" [mat-dialog-close]="profileForm.value" cdkFocusInitial>
+      Guardar
+    </button>
+  </div>
+
 </div>

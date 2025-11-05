@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <div style="text-align: center;">
     <div>
-      <img id="foto" [src]="selectedFile" alt="" height="170rem" width="200rem" style="border-radius:10%;">
+      <img id="foto" src="assets/nina.jpg" alt="" height="170rem" width="200rem" style="border-radius:10%;">
     </div>
     <div style="margin-top: 1rem;">
       <input [hidden]="true" type="file" #fileInput (change)="onFileSelected($event)" accept="image/*">

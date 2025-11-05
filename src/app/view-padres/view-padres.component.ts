@@ -93,9 +93,12 @@ export class ViewPadresComponent implements OnInit {
     }
     if (data === 'pool') {
       usuario.qrCarPool = true;
-      usuario.alumno.forEach((al: any) => {
+      usuario.alumno = [];
+      /* usuario.alumno.forEach((al: any) => {
         al.qrCarPool = true;
-      });
+      }); */
+      console.log(usuario);
+
       this.qrCode = JSON.stringify(usuario);
       usuario.qrCode = this.qrCode;
       this.carpool = [];
@@ -352,6 +355,10 @@ export class ViewPadresComponent implements OnInit {
   }
 
   editarCarPool(pool: any, index: number) {
+    const findAlumno = this.alumnos.filter((alumno: any) => alumno.nombre === pool.alumnoSeleccionado);
+    if (findAlumno.length > 0) {
+      pool.alumno = [findAlumno[0]];
+    }
     const dialogRef = this.dialog.open(CarPoolDialog, {
       data: {
         action: 'editar',
@@ -426,6 +433,9 @@ export class CarPoolDialog {
         this.titulo = 'Editar Car Pool';
         this.selectedFile = data.data.fotoUrl || this.selectedFile;
         this.profileForm.patchValue(data.data);
+        console.log('data', data);
+
+
         if (data.data.alumno && Array.isArray(data.data.alumno)) {
           const alumnoArray = this.profileForm.get('alumno') as FormArray;
           data.data.alumno.forEach((alumno: any) => {

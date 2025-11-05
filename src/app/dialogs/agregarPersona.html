@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <div style="text-align: center;">
     <div>
-      <img id="foto" [src]="selectedFile" alt="" height="170rem" width="200rem" style="border-radius:10%;">
+      <img id="foto" src="assets/abuelo.jpg" alt="" height="170rem" width="200rem" style="border-radius:10%;">
     </div>
     <div style="margin-top: 1rem;">
       <input [hidden]="true" type="file" #fileInput (change)="onFileSelected($event)" accept="image/*">
@@ -21,13 +21,13 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Parentesco</mat-label>
-      <mat-select  matNativeControl formControlName="parentesco">
+      <mat-select matNativeControl formControlName="parentesco">
         <mat-option value="abuelo">Abuelo(a)</mat-option>
         <mat-option value="primo">Primo(a)</mat-option>
         <mat-option value="hermano(a)">Hermano(a)</mat-option>
         <mat-option value="tio(a)">Tio(a)</mat-option>
         <mat-option value="amigo(a)">Amigo(a)</mat-option>
-      </mat-select >
+      </mat-select>
     </mat-form-field>
     <div>
       <p>Datos Vehiculo</p>
