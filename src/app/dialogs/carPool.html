@@ -50,7 +50,7 @@
             <mat-card-title style="font-size: medium">{{alumno.nombre}}</mat-card-title>
           </mat-card-header>
           <mat-card-content> </mat-card-content>
-          <mat-card-actions style="display: flex; justify-content: center">
+          <mat-card-actions *ngIf="data.action !== 'aprobar'" style="display: flex; justify-content: center">
             <div>
               <p>Seleccionado</p>
             </div>

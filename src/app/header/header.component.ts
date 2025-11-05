@@ -25,6 +25,11 @@ export class HeaderComponent {
   constructor(private router: Router, public service: SharedServiceService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
     this.service.enviarNotificacion.subscribe((data) => {
       if (data) {
+        const alumnos = this.service.getAlumnos();
+        if (alumnos) {
+          this.alumnos = [];
+          this.alumnos.push(alumnos);
+        }
         const carpool = this.service.getCarPool();
         if (carpool) {
           this.carpool.push(carpool);
@@ -33,7 +38,7 @@ export class HeaderComponent {
       }
     });
     if (this.router.url.includes('/teacher')) {
-      this.titulo = 'Class Room';
+      this.titulo = 'Entrega de Alumnos';
     } else if (this.router.url.includes('/perfil-alumno')) {
       this.titulo = 'Perfil Alumno';
     } else if (this.router.url.includes('/scanner')) {
@@ -76,16 +81,16 @@ export class HeaderComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log('resultado del dialogo carpool', result);
+
       if (result) {
         if (result.status === 'aprobado') {
           result.mensaje = 'Autorizado';
-          this.service.carpoolNotificado.next(true);
         } else {
           result.mensaje = 'declinado';
         }
         result.alumno = [];
         this.notifications.splice(this.notifications.indexOf(notification), 1);
-        this.carpool.splice(this.carpool.indexOf(result), 1);
         this.service.setCarPool(result);
         const carPool = this.service.getCarPool();
         this.carpool = [];

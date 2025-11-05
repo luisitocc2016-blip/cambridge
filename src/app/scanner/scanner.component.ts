@@ -41,18 +41,24 @@ export class ScannerComponent {
   constructor(public service: SharedServiceService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
     const users = this.service.getUser();
     if (users) {
+      this.users = [];
       this.users.push(users);
     }
     const alumnos = this.service.getAlumnos();
     if (alumnos) {
+      this.alumnos = [];
       this.alumnos.push(alumnos);
     }
     const carpool = this.service.getCarPool();
     if (carpool) {
+      this.carpool = [];
       this.carpool.push(carpool);
     }
     const personasAutorizadas = this.service.getPersonaAutorizada();
-    this.personasAutorizadas.push(personasAutorizadas);
+    if (personasAutorizadas) {
+      this.personasAutorizadas = [];
+      this.personasAutorizadas.push(personasAutorizadas);
+    }
   }
 
 
@@ -67,6 +73,7 @@ export class ScannerComponent {
             findUser[0].hijos = this.alumnos;
           }
           if (findUser.length > 0) {
+            this.service.listaDeEntregaAlumnos.push(findUser[0]);
             this.dialog.open(successQrDialog, {
               data: {
                 parentesco: 'Tutor',
@@ -100,6 +107,7 @@ export class ScannerComponent {
             }
           }
           if (findUser.length > 0) {
+            this.service.listaDeEntregaAlumnos.push(findUser[0]);
             this.dialog.open(successQrDialog, {
               data: {
                 parentesco: 'Car-Pool',
@@ -127,6 +135,7 @@ export class ScannerComponent {
         if (this.alumnos.length > 0) {
           const findUser = this.alumnos.filter((user: any) => user.nombre === this.qrResultString[0].nombre);
           if (findUser.length > 0) {
+            this.service.listaDeEntregaAlumnos.push(findUser[0]);
             this.dialog.open(successQrDialog, {
               data: {
                 parentesco: 'Alumno',
@@ -157,6 +166,7 @@ export class ScannerComponent {
             if (this.alumnos.length > 0) {
               findUser[0].hijos = this.alumnos;
             }
+            this.service.listaDeEntregaAlumnos.push(findUser[0]);
             this.dialog.open(successQrDialog, {
               data: {
                 parentesco: 'Persona Autorizada',

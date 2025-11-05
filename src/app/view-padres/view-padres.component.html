@@ -32,7 +32,7 @@
                                                     <button mat-button (click)="verQr(user)">Ver QR</button>
                                                 </div>
                                                 <div *ngIf="!user.qrCode">
-                                                    <button mat-button (click)="generateQr(user,'user')">Crear
+                                                    <button mat-button (click)="generateQr(user,'user', true)">Crear
                                                         QR</button>
                                                 </div>
                                                 <button mat-button (click)="editarUser(user)">Editar</button>
@@ -69,7 +69,8 @@
                                                     <button mat-button (click)="verQr(alumno)">Ver QR</button>
                                                 </div>
                                                 <div *ngIf="!alumno.qrCode">
-                                                    <button mat-button (click)="generateQr(alumno, 'alumno')">Crear
+                                                    <button mat-button
+                                                        (click)="generateQr(alumno, 'alumno', true)">Crear
                                                         QR</button>
                                                 </div>
                                                 <button mat-button (click)="editarAlumno(alumno)">Editar</button>
@@ -81,7 +82,7 @@
                                 </div>
                             </div>
                         </mat-tab>
-                        <mat-tab label="Car-Pool">
+                        <mat-tab label="Car-Pool-Enviados">
                             <div style="text-align: center; margin-top: 1rem;">
                                 <button mat-raised-button color="primary" (click)="agregarCarPool()">+
                                     Car-Pool</button>
@@ -107,12 +108,48 @@
                                                         <button mat-button (click)="verQr(pool)">Ver QR</button>
                                                     </div>
                                                     <div *ngIf="!pool.qrCode">
-                                                        <button mat-button (click)="generateQr(pool, 'pool')">Crear
+                                                        <button mat-button
+                                                            (click)="generateQr(pool, 'pool', true)">Crear
                                                             QR</button>
                                                     </div>
                                                     <button mat-button (click)="editarCarPool(pool,i)">Editar</button>
                                                     <button mat-button style="color: red;"
                                                         (click)="boarrarCarPool(pool)">Borrar</button>
+                                                </mat-card-actions>
+                                            </mat-card>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Car-Pool-Aceptados">
+                            <div class="body">
+                                <div
+                                    style="display: flex;justify-content: space-evenly;margin-top: 3.5rem;margin-bottom: 2rem;">
+                                    <div *ngFor="let pool of carpool; let i = index">
+                                        <div *ngIf="pool.status === 'aprobado'">
+                                            <mat-card class="example-card">
+                                                <mat-card-header style="display: flex; flex-direction: column;">
+                                                    <div style="text-align: center;">
+                                                        <img [src]="pool.qrCode" alt="" height="200rem" width="250rem"
+                                                            style="border-radius:10%;">
+                                                    </div>
+                                                    <mat-card-title
+                                                        style="font-size: medium; margin-right: 1rem;">CarPool de -
+                                                        {{pool.quienEnvia}}</mat-card-title>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                </mat-card-content>
+                                                <mat-card-actions>
+                                                    <div *ngIf="pool.qrCode">
+                                                        <button mat-button (click)="verQr(pool)">Ver QR</button>
+                                                    </div>
+                                                    <div *ngIf="!pool.qrCode">
+                                                        <button mat-button
+                                                            (click)="generateQr(pool, 'pool', true)">Crear
+                                                            QR</button>
+                                                    </div>
                                                 </mat-card-actions>
                                             </mat-card>
                                         </div>
@@ -149,7 +186,8 @@
                                                     </div>
                                                     <div *ngIf="!persona.qrCode">
                                                         <button mat-button
-                                                            (click)="generateQr(persona, 'persona')">Crear QR</button>
+                                                            (click)="generateQr(persona, 'persona', true)">Crear
+                                                            QR</button>
                                                     </div>
                                                     <button mat-button (click)="editarPersona(persona)">Editar</button>
                                                     <button mat-button style="color: red;"

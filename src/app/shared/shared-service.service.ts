@@ -9,12 +9,17 @@ export class SharedServiceService {
   users: any = [];
   carpool: any = [];
   personasAutorizadas: any = [];
+  listaDeEntregaAlumnos: any = [];
   enviarNotificacion: BehaviorSubject<any>;
   carpoolNotificado: BehaviorSubject<any>;
 
   constructor() {
     this.enviarNotificacion = new BehaviorSubject<any>(null);
     this.carpoolNotificado = new BehaviorSubject<any>(null);
+  }
+
+  getListaDeEntregaAlumnos() {
+    return this.listaDeEntregaAlumnos;
   }
 
 

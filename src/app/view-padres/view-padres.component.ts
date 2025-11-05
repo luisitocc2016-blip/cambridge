@@ -46,19 +46,25 @@ export class ViewPadresComponent implements OnInit {
 
   ngOnInit(): void {
     const users = this.service.getUser();
+    console.log(users);
+
     if (users) {
+      this.users = [];
       this.users.push(users);
     }
     const alumnos = this.service.getAlumnos();
     if (alumnos) {
+      this.alumnos = [];
       this.alumnos.push(alumnos);
     }
     const carpool = this.service.getCarPool();
     if (carpool) {
+      this.carpool = [];
       this.carpool.push(carpool);
     }
     const personasAutorizadas = this.service.getPersonaAutorizada();
     if (personasAutorizadas) {
+      this.personasAutorizadas = [];
       this.personasAutorizadas.push(personasAutorizadas);
     }
   }
@@ -71,7 +77,7 @@ export class ViewPadresComponent implements OnInit {
     });
   }
 
-  generateQr(usuario: any, data: string) {
+  generateQr(usuario: any, data: string, dialogo: boolean) {
     this.qrCode = '';
     if (data === 'persona') {
       usuario.qrPersonaAutorizada = true;
@@ -92,7 +98,7 @@ export class ViewPadresComponent implements OnInit {
       });
       this.qrCode = JSON.stringify(usuario);
       usuario.qrCode = this.qrCode;
-      this.carpool.splice(this.carpool.indexOf(usuario), 1);
+      this.carpool = [];
       this.service.setCarPool(usuario);
       const carPool = this.service.getCarPool();
       this.carpool.push(carPool);
@@ -115,11 +121,13 @@ export class ViewPadresComponent implements OnInit {
       const alumnos = this.service.getAlumnos();
       this.alumnos.push(alumnos);
     }
-    this.dialog.open(qRDialog, {
-      data: this.qrCode,
-      width: '50%',
-      disableClose: false
-    });
+    if (dialogo) {
+      this.dialog.open(qRDialog, {
+        data: this.qrCode,
+        width: '50%',
+        disableClose: false
+      });
+    }
   }
 
   agregarUser() {
