@@ -4,7 +4,7 @@
     <h3>Familia Solicitante: {{data.data.quienEnvia }}</h3>
 
   </div>
-  <div *ngIf="data.action === 'Nuevo'">
+  <div *ngIf="data.action === 'nuevo'">
     <p>Seleccione Familia</p>
     <div style="
         display: flex;
@@ -66,7 +66,10 @@
     <p>Informacion General del Car-Pool</p>
   </div>
   <div *ngIf="data.action !== 'aprobar'" style="text-align: center">
-    <div>
+    <div *ngIf="data.action === 'nuevo'">
+      <img id="foto" [src]="selectedFile" alt="" height="170rem" width="200rem" style="border-radius: 10%" />
+    </div>
+    <div *ngIf="data.action === 'editar'">
       <img id="foto" src="assets/tia.jfif" alt="" height="170rem" width="200rem" style="border-radius: 10%" />
     </div>
     <div style="margin-top: 1rem">
@@ -126,7 +129,7 @@
   <button mat-raised-button color="secondary" (click)="onNoClick()">
     Cancelar
   </button>
-  <div *ngIf="data.action === 'Nuevo'">
+  <div *ngIf="data.action === 'nuevo'">
     <button mat-raised-button color="primary" [mat-dialog-close]="profileForm.value" cdkFocusInitial>
       Enviar
     </button>

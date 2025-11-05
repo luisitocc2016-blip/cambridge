@@ -9,6 +9,7 @@ import { SharedServiceService } from '../shared/shared-service.service';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -72,7 +73,7 @@ export class LoginComponent {
   selector: 'app-newUser',
   templateUrl: '../dialogs/agregarNuevoUsuario.html',
   standalone: true,
-  imports: [MatSnackBarModule, MatSelectModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatSnackBarModule, MatSelectModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule, CommonModule],
 })
 export class NewUserDialog {
   titulo = '';

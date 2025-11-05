@@ -15,6 +15,7 @@ import { SafeUrl } from '@angular/platform-browser';
 import { QRCodeModule } from 'angularx-qrcode';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 
 @Component({
@@ -211,7 +212,7 @@ export class ViewPadresComponent implements OnInit {
 
   agregarAlumno() {
     const dialogRef = this.dialog.open(FamiliaDialog, {
-      data: {},
+      data: { action: 'nuevo' },
       width: '25%'
     });
 
@@ -239,7 +240,7 @@ export class ViewPadresComponent implements OnInit {
 
   editarAlumno(alumno: any) {
     const dialogRef = this.dialog.open(FamiliaDialog, {
-      data: alumno,
+      data: { action: 'edit', alumno },
       width: '25%'
     });
 
@@ -272,7 +273,7 @@ export class ViewPadresComponent implements OnInit {
 
   agregarPersona() {
     const dialogRef = this.dialog.open(PersonaAutorizadaDialog, {
-      data: {},
+      data: { action: 'nuevo' },
       width: '25%'
     });
 
@@ -296,7 +297,7 @@ export class ViewPadresComponent implements OnInit {
 
   editarPersona(persona: any) {
     const dialogRef = this.dialog.open(PersonaAutorizadaDialog, {
-      data: persona,
+      data: { action: 'editar', persona },
       width: '25%'
     });
 
@@ -329,7 +330,7 @@ export class ViewPadresComponent implements OnInit {
   agregarCarPool() {
     const dialogRef = this.dialog.open(CarPoolDialog, {
       data: {
-        action: 'Nuevo',
+        action: 'nuevo',
         data: this.alumnos
       },
       width: '27%'
@@ -425,10 +426,23 @@ export class CarPoolDialog {
   constructor(
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<PersonaAutorizadaDialog>
+    public dialogRef: MatDialogRef<CarPoolDialog>
   ) {
     this.selectedFile = '../../assets/avatar.png';
     if (data) {
+      if (data.action && data.action === 'nuevo') {
+        this.titulo = 'Nuevo Car Pool';
+        this.selectedFile = data.data[0].fotoUrl || this.selectedFile;
+        console.log('data', data);
+
+
+        if (data.data && Array.isArray(data.data[0])) {
+          const alumnoArray = this.profileForm.get('alumno') as FormArray;
+          data.data.alumno.forEach((alumno: any) => {
+            alumnoArray.push(new FormControl(alumno));
+          });
+        }
+      }
       if (data.action && data.action === 'editar') {
         this.titulo = 'Editar Car Pool';
         this.selectedFile = data.data.fotoUrl || this.selectedFile;
@@ -454,8 +468,6 @@ export class CarPoolDialog {
             alumnoArray.push(new FormControl(alumno));
           });
         }
-      } else {
-        this.titulo = 'Nuevo Car Pool';
       }
     }
   }
@@ -560,12 +572,12 @@ export class qRDialog {
   selector: 'app-dialog',
   templateUrl: '../dialogs/agregarFamila.html',
   standalone: true,
-  imports: [MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatSnackBarModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule, CommonModule],
 })
 export class FamiliaDialog {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  nombreAlumno: string = this.data?.nombre || 'Nuevo Alumno(a)';
+  nombreAlumno: string = this.data?.alumno?.nombre || 'Nuevo Alumno(a)';
   selectedFile: any = null;
   familia = new FormGroup({
     nombre: new FormControl(''),
@@ -581,8 +593,12 @@ export class FamiliaDialog {
   ) {
     this.selectedFile = '../../assets/avatar.png';
     if (data) {
-      this.selectedFile = data.fotoUrl || this.selectedFile;
-      this.familia.patchValue(data);
+      console.log('data', data);
+
+      if (data.alumno) {
+        this.selectedFile = data.alumno.fotoUrl || this.selectedFile;
+        this.familia.patchValue(data.alumno);
+      }
     }
   }
 
@@ -604,12 +620,12 @@ export class FamiliaDialog {
   selector: 'app-dialog',
   templateUrl: '../dialogs/agregarPersona.html',
   standalone: true,
-  imports: [MatSnackBarModule, MatSelectModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatSnackBarModule, MatSelectModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule, CommonModule],
 })
 export class PersonaAutorizadaDialog {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  nombrePersona: string = this.data?.nombre || 'Nuevo Persona Autorizada';
+  nombrePersona: string = this.data?.persona?.nombre || 'Nuevo Persona Autorizada';
   selectedFile: any = null;
   profileForm = new FormGroup({
     nombre: new FormControl(''),
@@ -627,8 +643,11 @@ export class PersonaAutorizadaDialog {
   ) {
     this.selectedFile = '../../assets/avatar.png';
     if (data) {
-      this.selectedFile = data.fotoUrl || this.selectedFile;
-      this.profileForm.patchValue(data);
+      console.log('data persona', data);
+      if (data.action === 'editar') {
+        this.selectedFile = data.fotoUrl || this.selectedFile;
+        this.profileForm.patchValue(data.persona);
+      }
     }
   }
 

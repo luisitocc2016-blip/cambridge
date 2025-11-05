@@ -11,8 +11,17 @@
       <div style="width: auto;margin-right: 10px;">
         <mat-card class="example-card">
           <mat-card-header style="display: flex; flex-direction: column">
-            <div style="text-align: center">
-              <img [src]="data.user.fotoUrl" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
+            <div *ngIf="data.parentesco === 'Tutor'" style="text-align: center">
+              <img src="assets/mama.jpg" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
+            </div>
+            <div *ngIf="data.parentesco === 'Persona Autorizada'" style="text-align: center">
+              <img src="assets/abuelo.jpg" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
+            </div>
+            <div *ngIf="data.parentesco === 'Car-Pool'" style="text-align: center">
+              <img src="assets/tia.jfif" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
+            </div>
+            <div *ngIf="data.parentesco === 'Alumno'" style="text-align: center">
+              <img src="assets/nina.jpg" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
             </div>
             <mat-card-title style="font-size: medium">{{data.user.nombre}}</mat-card-title>
           </mat-card-header>
@@ -47,7 +56,7 @@
         <mat-card class="example-card">
           <mat-card-header style="display: flex; flex-direction: column">
             <div style="text-align: center">
-              <img [src]="hijo.fotoUrl" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
+              <img src="assets/nina.jpg" alt="" height="100rem" width="110rem" style="border-radius: 10%" />
             </div>
             <mat-card-title style="font-size: medium">{{hijo.nombre}}</mat-card-title>
           </mat-card-header>
