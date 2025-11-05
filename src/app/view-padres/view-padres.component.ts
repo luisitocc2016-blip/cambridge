@@ -47,8 +47,6 @@ export class ViewPadresComponent implements OnInit {
 
   ngOnInit(): void {
     const users = this.service.getUser();
-    console.log(users);
-
     if (users) {
       this.users = [];
       this.users.push(users);
@@ -98,7 +96,6 @@ export class ViewPadresComponent implements OnInit {
       /* usuario.alumno.forEach((al: any) => {
         al.qrCarPool = true;
       }); */
-      console.log(usuario);
 
       this.qrCode = JSON.stringify(usuario);
       usuario.qrCode = this.qrCode;
@@ -433,9 +430,6 @@ export class CarPoolDialog {
       if (data.action && data.action === 'nuevo') {
         this.titulo = 'Nuevo Car Pool';
         this.selectedFile = data.data[0].fotoUrl || this.selectedFile;
-        console.log('data', data);
-
-
         if (data.data && Array.isArray(data.data[0])) {
           const alumnoArray = this.profileForm.get('alumno') as FormArray;
           data.data.alumno.forEach((alumno: any) => {
@@ -447,9 +441,6 @@ export class CarPoolDialog {
         this.titulo = 'Editar Car Pool';
         this.selectedFile = data.data.fotoUrl || this.selectedFile;
         this.profileForm.patchValue(data.data);
-        console.log('data', data);
-
-
         if (data.data.alumno && Array.isArray(data.data.alumno)) {
           const alumnoArray = this.profileForm.get('alumno') as FormArray;
           data.data.alumno.forEach((alumno: any) => {
@@ -593,8 +584,6 @@ export class FamiliaDialog {
   ) {
     this.selectedFile = '../../assets/avatar.png';
     if (data) {
-      console.log('data', data);
-
       if (data.alumno) {
         this.selectedFile = data.alumno.fotoUrl || this.selectedFile;
         this.familia.patchValue(data.alumno);
@@ -643,7 +632,6 @@ export class PersonaAutorizadaDialog {
   ) {
     this.selectedFile = '../../assets/avatar.png';
     if (data) {
-      console.log('data persona', data);
       if (data.action === 'editar') {
         this.selectedFile = data.fotoUrl || this.selectedFile;
         this.profileForm.patchValue(data.persona);

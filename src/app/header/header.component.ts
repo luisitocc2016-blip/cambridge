@@ -81,8 +81,6 @@ export class HeaderComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('resultado del dialogo carpool', result);
-
       if (result) {
         if (result.status === 'aprobado') {
           result.mensaje = 'Autorizado';
